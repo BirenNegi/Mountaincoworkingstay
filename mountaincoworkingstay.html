@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mountain Coworking Stay — Sarainkhet, Almora</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:     #151a12;
+  --forest:  #243b1e;
+  --fern:    #4c7343;
+  --lichen:  #8aac7e;
+  --fog:     #d4dece;
+  --parchment: #f5f1e8;
+  --paper:   #fdfaf4;
+  --ember:   #d4813a;
+  --gold:    #c9a84c;
+  --snow:    #ffffff;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── CUSTOM CURSOR ── */
+.cursor {
+  width: 10px; height: 10px;
+  background: var(--ember);
+  border-radius: 50%;
+  position: fixed; top: 0; left: 0;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s, width 0.3s, height 0.3s, background 0.3s;
+  mix-blend-mode: multiply;
+}
+.cursor-ring {
+  width: 36px; height: 36px;
+  border: 1.5px solid var(--ember);
+  border-radius: 50%;
+  position: fixed; top: 0; left: 0;
+  pointer-events: none; z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: transform 0.25s ease, width 0.3s, height 0.3s;
+  opacity: 0.6;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; width: 100%; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.4rem 3.5rem;
+  mix-blend-mode: normal;
+  transition: background 0.5s, padding 0.3s;
+}
+nav.scrolled {
+  background: rgba(21,26,18,0.95);
+  backdrop-filter: blur(12px);
+  padding: 0.9rem 3.5rem;
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+}
+.logo-wrap { display: flex; flex-direction: column; line-height: 1; }
+.logo-main {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.35rem; font-weight: 600;
+  color: white; letter-spacing: 0.03em;
+}
+.logo-sub {
+  font-size: 0.62rem; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--gold); margin-top: 2px;
+}
+.nav-center {
+  display: flex; gap: 2.5rem; list-style: none; position: absolute;
+  left: 50%; transform: translateX(-50%);
+}
+.nav-center a {
+  color: rgba(255,255,255,0.75); text-decoration: none;
+  font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+  transition: color 0.3s; font-weight: 400;
+}
+.nav-center a:hover { color: var(--gold); }
+.nav-book {
+  background: none; border: 1px solid rgba(255,255,255,0.35);
+  color: white; padding: 0.55rem 1.5rem;
+  font-family: 'Outfit', sans-serif; font-size: 0.72rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  cursor: none; transition: all 0.3s;
+}
+.nav-book:hover { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+
+/* ── HERO ── */
+.hero {
+  height: 100vh; position: relative; overflow: hidden;
+  background: var(--forest);
+}
+.hero-slides { display: flex; height: 100%; will-change: transform; }
+.hero-slide {
+  min-width: 100%; height: 100%; position: relative;
+  display: flex; flex-direction: column;
+  justify-content: flex-end; padding: 6rem 3.5rem;
+}
+
+/* Atmospheric gradient backgrounds */
+.hs-1 { background: radial-gradient(ellipse at 30% 60%, #2d5a2a 0%, #1a3a18 40%, #0d1f0c 100%); }
+.hs-2 { background: radial-gradient(ellipse at 70% 40%, #1a3550 0%, #0d2035 50%, #060d1a 100%); }
+.hs-3 { background: radial-gradient(ellipse at 50% 70%, #3a2010 0%, #221008 50%, #0e0605 100%); }
+.hs-4 { background: radial-gradient(ellipse at 20% 50%, #1e3a28 0%, #0f2018 50%, #060e0a 100%); }
+.hs-5 { background: radial-gradient(ellipse at 60% 30%, #2a1a40 0%, #150d28 50%, #080512 100%); }
+
+/* Floating particles per slide */
+.particles {
+  position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+}
+.particle {
+  position: absolute; border-radius: 50%;
+  animation: float linear infinite;
+  opacity: 0;
+}
+@keyframes float {
+  0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.3; }
+  100% { transform: translateY(-100px) translateX(40px); opacity: 0; }
+}
+
+.slide-number {
+  position: absolute; top: 50%; right: 3.5rem; transform: translateY(-50%);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 8rem; font-weight: 300; font-style: italic;
+  color: rgba(255,255,255,0.04); line-height: 1; pointer-events: none;
+  user-select: none;
+}
+
+.slide-tag {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 1.4rem;
+}
+.slide-tag::before {
+  content: ''; display: block; width: 30px; height: 1px; background: var(--gold);
+}
+
+.slide-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3.2rem, 8vw, 7rem);
+  font-weight: 300; line-height: 0.95;
+  color: white; max-width: 750px; margin-bottom: 1.8rem;
+}
+.slide-headline em {
+  font-style: italic; color: var(--gold);
+  display: block;
+}
+.slide-headline strong {
+  font-weight: 600; color: white;
+}
+
+.slide-body {
+  color: rgba(255,255,255,0.6); font-size: 0.95rem;
+  max-width: 440px; line-height: 1.85; font-weight: 300;
+  margin-bottom: 2.5rem;
+}
+
+.slide-actions { display: flex; gap: 1rem; align-items: center; }
+.btn-primary {
+  background: var(--ember); color: white; border: none;
+  padding: 0.9rem 2rem; font-family: 'Outfit', sans-serif;
+  font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
+  cursor: none; transition: all 0.3s; text-decoration: none; display: inline-block;
+}
+.btn-primary:hover { background: var(--gold); }
+.btn-ghost {
+  background: none; color: rgba(255,255,255,0.6); border: none;
+  font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
+  cursor: none; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;
+  transition: color 0.3s; padding: 0.9rem 0;
+}
+.btn-ghost:hover { color: white; }
+.btn-ghost::after { content: '→'; transition: transform 0.3s; }
+.btn-ghost:hover::after { transform: translateX(4px); }
+
+/* slide progress bar */
+.progress-bar {
+  position: absolute; bottom: 0; left: 0; height: 2px;
+  background: var(--gold); transform-origin: left;
+  animation: progressFill 5.5s linear infinite;
+}
+@keyframes progressFill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* slider dots */
+.slider-dots {
+  position: absolute; right: 3.5rem; bottom: 3rem;
+  display: flex; flex-direction: column; gap: 0.5rem; z-index: 10;
+}
+.sdot {
+  width: 2px; height: 20px; background: rgba(255,255,255,0.2);
+  border: none; cursor: none; transition: all 0.3s; position: relative;
+}
+.sdot::after {
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 100%; height: 0%; background: var(--gold);
+  transition: height 0.3s;
+}
+.sdot.active { height: 35px; }
+.sdot.active::after { height: 100%; }
+
+.slide-arrows {
+  position: absolute; left: 3.5rem; bottom: 3rem;
+  display: flex; gap: 0.5rem; z-index: 10;
+}
+.sarr {
+  width: 44px; height: 44px; border: 1px solid rgba(255,255,255,0.2);
+  background: none; color: rgba(255,255,255,0.6); font-size: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  cursor: none; transition: all 0.3s;
+}
+.sarr:hover { border-color: var(--gold); color: var(--gold); }
+
+/* ── MARQUEE ── */
+.marquee-wrap {
+  background: var(--ink); overflow: hidden; padding: 1rem 0;
+  border-top: 1px solid rgba(201,168,76,0.2);
+  border-bottom: 1px solid rgba(201,168,76,0.2);
+}
+.marquee-track {
+  display: flex; gap: 3rem; white-space: nowrap;
+  animation: marqueeScroll 25s linear infinite;
+}
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-item {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.9rem; font-style: italic; color: rgba(255,255,255,0.4);
+  letter-spacing: 0.08em; flex-shrink: 0;
+}
+.marquee-dot { color: var(--gold); margin: 0 1rem; }
+
+/* ── SECTIONS BASE ── */
+.section { padding: 7rem 3.5rem; }
+.section-eyebrow {
+  display: flex; align-items: center; gap: 1rem;
+  font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--fern); margin-bottom: 1rem;
+}
+.section-eyebrow::before {
+  content: ''; display: block; width: 24px; height: 1px; background: var(--fern);
+}
+.section-h {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 300; line-height: 1.1; color: var(--ink);
+}
+.section-h em { font-style: italic; color: var(--fern); }
+
+/* ── ABOUT SPLIT ── */
+.about-split {
+  max-width: 1300px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: stretch;
+  border: 1px solid var(--fog);
+}
+.about-left {
+  padding: 5rem;
+  border-right: 1px solid var(--fog);
+}
+.about-left p {
+  color: #5a6a52; line-height: 1.95; margin-top: 2rem;
+  font-weight: 300; font-size: 0.97rem;
+}
+.about-left p + p { margin-top: 1rem; }
+
+.about-right {
+  display: grid; grid-template-rows: 1fr 1fr; grid-template-columns: 1fr 1fr;
+}
+.about-stat-box {
+  padding: 2.5rem; display: flex; flex-direction: column;
+  justify-content: flex-end; border-right: 1px solid var(--fog);
+  border-bottom: 1px solid var(--fog); position: relative; overflow: hidden;
+}
+.about-stat-box:nth-child(2) { border-right: none; }
+.about-stat-box:nth-child(3) { border-bottom: none; }
+.about-stat-box:nth-child(4) { border-right: none; border-bottom: none; }
+.about-stat-box.accent-box {
+  background: var(--forest); color: white;
+}
+.stat-bg-num {
+  position: absolute; top: -0.5rem; left: 1rem;
+  font-family: 'Cormorant Garamond', serif; font-size: 5rem;
+  font-weight: 300; opacity: 0.06; color: var(--fern); line-height: 1;
+  pointer-events: none;
+}
+.accent-box .stat-bg-num { opacity: 0.12; color: var(--gold); }
+.stat-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.8rem; font-weight: 300; color: var(--ink); line-height: 1;
+}
+.accent-box .stat-val { color: var(--gold); }
+.stat-name {
+  font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--lichen); margin-top: 0.4rem;
+}
+.accent-box .stat-name { color: rgba(255,255,255,0.5); }
+
+/* ── AMENITY FEATURE GRID ── */
+.amenities-section { background: var(--parchment); }
+.amenities-inner { max-width: 1300px; margin: 0 auto; }
+.amenities-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: 1px; margin-top: 4rem; background: var(--fog);
+  border: 1px solid var(--fog);
+}
+.amenity-card {
+  background: var(--paper); padding: 2.5rem 2rem 2.8rem;
+  position: relative; overflow: hidden;
+  transition: background 0.4s;
+}
+.amenity-card::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 0;
+  background: var(--forest); transition: height 0.4s; z-index: 0;
+}
+.amenity-card:hover::after { height: 4px; }
+.amenity-card:hover { background: #f0ede3; }
+.amenity-card > * { position: relative; z-index: 1; }
+
+.am-icon {
+  width: 48px; height: 48px; display: flex; align-items: center;
+  justify-content: center; background: var(--fog);
+  margin-bottom: 1.5rem; font-size: 1.4rem;
+  transition: background 0.3s;
+}
+.amenity-card:hover .am-icon { background: var(--lichen); }
+.am-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem; font-weight: 400; color: var(--ink);
+  margin-bottom: 0.7rem; line-height: 1.2;
+}
+.am-desc {
+  font-size: 0.8rem; color: #6a7a60; line-height: 1.75; font-weight: 300;
+}
+
+/* ── EXPERIENCE FULL-WIDTH SECTIONS ── */
+.exp-block {
+  display: grid; grid-template-columns: 1fr 1fr; min-height: 580px;
+}
+.exp-block.reverse { direction: rtl; }
+.exp-block.reverse > * { direction: ltr; }
+
+.exp-visual {
+  position: relative; overflow: hidden; display: flex;
+  align-items: center; justify-content: center; min-height: 400px;
+}
+.exp-visual .ev-inner {
+  width: 100%; height: 100%; display: flex;
+  align-items: center; justify-content: center; font-size: 5rem;
+  position: relative;
+}
+.ev-1 { background: linear-gradient(135deg, #0f2a1a 0%, #1e4a2d 60%, #2d6a40 100%); }
+.ev-2 { background: linear-gradient(135deg, #0a1525 0%, #142540 60%, #1e3555 100%); }
+.ev-3 { background: linear-gradient(135deg, #25100a 0%, #3a2010 60%, #503020 100%); }
+.ev-4 { background: linear-gradient(135deg, #101f14 0%, #1a3520 60%, #253a2a 100%); }
+
+.ev-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to right, rgba(0,0,0,0.3), transparent);
+  pointer-events: none;
+}
+
+.exp-content {
+  padding: 5rem; display: flex; flex-direction: column; justify-content: center;
+  background: var(--paper);
+}
+.exp-block.reverse .exp-content { background: var(--parchment); }
+.exp-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 5rem; font-weight: 300; color: var(--fog);
+  line-height: 1; margin-bottom: 1rem;
+}
+.exp-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.6rem; font-weight: 300; line-height: 1.15;
+  color: var(--ink); margin-bottom: 1.2rem;
+}
+.exp-title em { font-style: italic; color: var(--fern); }
+.exp-body {
+  color: #5a6a52; line-height: 1.9; font-size: 0.93rem;
+  font-weight: 300; margin-bottom: 1.8rem;
+}
+.exp-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.pill {
+  padding: 0.3rem 0.9rem; border: 1px solid var(--fog);
+  font-size: 0.68rem; letter-spacing: 0.1em; color: var(--fern);
+  text-transform: uppercase;
+}
+
+/* ── WEEKEND SECTION ── */
+.weekend-section { background: var(--forest); color: white; }
+.weekend-inner { max-width: 1300px; margin: 0 auto; }
+.weekend-inner .section-eyebrow { color: rgba(200,216,196,0.5); }
+.weekend-inner .section-eyebrow::before { background: var(--gold); }
+.weekend-inner .section-h { color: white; }
+.weekend-inner .section-h em { color: var(--gold); }
+.weekend-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1px; margin-top: 4rem; background: rgba(255,255,255,0.06);
+}
+.wday {
+  background: var(--forest); padding: 2.5rem 2rem;
+  position: relative; overflow: hidden;
+  transition: background 0.3s;
+}
+.wday:hover { background: rgba(255,255,255,0.04); }
+.wday-time {
+  font-size: 0.64rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 1.2rem; display: block;
+}
+.wday-icon { font-size: 2rem; display: block; margin-bottom: 1rem; }
+.wday-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem; color: white; margin-bottom: 0.8rem; line-height: 1.2;
+}
+.wday-desc {
+  font-size: 0.82rem; color: rgba(255,255,255,0.5);
+  line-height: 1.8; font-weight: 300;
+}
+.wday-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.2rem; }
+.wtag {
+  font-size: 0.62rem; padding: 0.2rem 0.6rem;
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.4); letter-spacing: 0.08em;
+}
+
+/* ── PRICING ── */
+.pricing-section { background: var(--paper); }
+.pricing-inner { max-width: 1100px; margin: 0 auto; }
+.pricing-cards {
+  display: grid; grid-template-columns: 1fr 1.2fr 1fr;
+  gap: 1px; margin-top: 4rem; background: var(--fog); border: 1px solid var(--fog);
+  align-items: stretch;
+}
+.p-card {
+  background: var(--paper); padding: 3rem 2.5rem;
+  display: flex; flex-direction: column;
+}
+.p-card.featured {
+  background: var(--forest); color: white; transform: none;
+  position: relative;
+}
+.p-card.featured::before {
+  content: 'Most Popular'; position: absolute; top: 0; left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--gold); color: var(--ink);
+  font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
+  padding: 0.3rem 1rem;
+}
+.p-type {
+  font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--lichen); margin-bottom: 1rem;
+}
+.featured .p-type { color: rgba(200,216,196,0.6); }
+.p-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.7rem; color: var(--ink); margin-bottom: 1.5rem; line-height: 1.1;
+}
+.featured .p-title { color: white; }
+.p-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.5rem; font-weight: 300; color: var(--ink); line-height: 1;
+}
+.featured .p-price { color: var(--gold); }
+.p-price sub {
+  font-size: 1rem; color: #8a9a82; font-family: 'Outfit', sans-serif; font-weight: 300;
+}
+.featured .p-price sub { color: rgba(255,255,255,0.4); }
+.p-min { font-size: 0.72rem; color: #8a9a82; margin-top: 0.4rem; }
+.featured .p-min { color: rgba(255,255,255,0.4); }
+.p-divider { height: 1px; background: var(--fog); margin: 2rem 0; }
+.featured .p-divider { background: rgba(255,255,255,0.1); }
+.p-features { list-style: none; flex: 1; }
+.p-features li {
+  padding: 0.5rem 0; font-size: 0.85rem; color: #5a6a52;
+  border-bottom: 1px solid var(--fog); display: flex; gap: 0.6rem; align-items: center;
+}
+.featured .p-features li { color: rgba(255,255,255,0.7); border-bottom-color: rgba(255,255,255,0.08); }
+.p-features li::before { content: '·'; color: var(--gold); font-size: 1.2rem; }
+.p-btn {
+  display: block; text-align: center; margin-top: 2rem; padding: 0.9rem;
+  font-family: 'Outfit', sans-serif; font-size: 0.75rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  text-decoration: none; cursor: none; transition: all 0.3s; border: none;
+}
+.p-card:not(.featured) .p-btn {
+  border: 1px solid var(--fog); color: var(--ink); background: none;
+}
+.p-card:not(.featured) .p-btn:hover { border-color: var(--fern); color: var(--fern); }
+.featured .p-btn { background: var(--gold); color: var(--ink); }
+.featured .p-btn:hover { background: white; }
+
+/* ── TESTIMONIALS ── */
+.reviews-section { background: var(--parchment); }
+.reviews-inner { max-width: 1300px; margin: 0 auto; }
+.reviews-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem; margin-top: 4rem;
+}
+.review-card {
+  padding: 2.5rem; background: white;
+  border: 1px solid var(--fog);
+  position: relative;
+}
+.review-card::before {
+  content: '"'; font-family: 'Cormorant Garamond', serif;
+  font-size: 5rem; line-height: 0.6; color: var(--fog);
+  position: absolute; top: 2rem; right: 2rem;
+}
+.review-stars { color: var(--gold); font-size: 0.85rem; letter-spacing: 0.1em; margin-bottom: 1.2rem; }
+.review-text {
+  font-size: 0.92rem; line-height: 1.85; color: #4a5a45;
+  font-weight: 300; font-style: italic; margin-bottom: 1.5rem;
+}
+.review-author { font-size: 0.8rem; font-weight: 500; color: var(--ink); }
+.review-role { font-size: 0.72rem; color: var(--lichen); letter-spacing: 0.06em; }
+
+/* ── GALLERY ── */
+.gallery-section { padding: 0; background: var(--ink); }
+.gallery-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: 300px 300px;
+  gap: 2px;
+}
+.gal-item {
+  position: relative; overflow: hidden; cursor: none;
+  display: flex; align-items: center; justify-content: center;
+}
+.gal-item:first-child { grid-row: 1 / 3; }
+.gal-bg {
+  width: 100%; height: 100%; display: flex; align-items: center;
+  justify-content: center; font-size: 4rem;
+  transition: transform 0.6s ease;
+}
+.gal-item:hover .gal-bg { transform: scale(1.06); }
+.gb1 { background: linear-gradient(135deg, #1a3a20 0%, #2d5a35 100%); }
+.gb2 { background: linear-gradient(135deg, #0f2535 0%, #1e3d50 100%); }
+.gb3 { background: linear-gradient(135deg, #2a1a0f 0%, #3d2820 100%); }
+.gb4 { background: linear-gradient(135deg, #1a2a18 0%, #283d25 100%); }
+.gb5 { background: linear-gradient(135deg, #1a1535 0%, #252048 100%); }
+.gal-cap {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 1.2rem; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  color: white; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
+  opacity: 0; transform: translateY(8px); transition: all 0.3s;
+}
+.gal-item:hover .gal-cap { opacity: 1; transform: translateY(0); }
+
+/* ── CONTACT ── */
+.contact-section { background: var(--paper); }
+.contact-inner { max-width: 1100px; margin: 0 auto; }
+.contact-split { display: grid; grid-template-columns: 1fr 1.3fr; gap: 5rem; margin-top: 4rem; }
+.contact-left p {
+  color: #5a6a52; line-height: 1.9; font-size: 0.93rem; font-weight: 300; margin-bottom: 2.5rem;
+}
+.contact-details { display: flex; flex-direction: column; gap: 1rem; }
+.cdet {
+  display: flex; gap: 1rem; align-items: flex-start;
+  padding-bottom: 1rem; border-bottom: 1px solid var(--fog);
+}
+.cdet:last-child { border-bottom: none; }
+.cdet-icon {
+  width: 36px; height: 36px; background: var(--fog);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.9rem; flex-shrink: 0;
+}
+.cdet-label { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--lichen); }
+.cdet-val { font-size: 0.88rem; color: var(--ink); margin-top: 0.2rem; }
+.cdet-val a { color: var(--ink); text-decoration: none; }
+.cdet-val a:hover { color: var(--fern); }
+
+.contact-form-wrap { display: flex; flex-direction: column; gap: 1.2rem; }
+.cf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+.cf-field { display: flex; flex-direction: column; gap: 0.4rem; }
+.cf-field label {
+  font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--lichen);
+}
+.cf-field input, .cf-field select, .cf-field textarea {
+  background: white; border: 1px solid var(--fog);
+  padding: 0.85rem 1rem; font-family: 'Outfit', sans-serif;
+  font-size: 0.88rem; color: var(--ink); outline: none;
+  transition: border-color 0.3s; resize: vertical;
+  -webkit-appearance: none;
+}
+.cf-field input:focus, .cf-field select:focus, .cf-field textarea:focus {
+  border-color: var(--fern);
+}
+.cf-submit {
+  background: var(--forest); color: white; border: none;
+  padding: 1rem 2.5rem; font-family: 'Outfit', sans-serif;
+  font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase;
+  cursor: none; transition: all 0.3s; align-self: flex-start;
+}
+.cf-submit:hover { background: var(--fern); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--ink); padding: 3rem 3.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: 1px solid rgba(201,168,76,0.15);
+  flex-wrap: wrap; gap: 1.5rem;
+}
+.footer-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem; color: white;
+}
+.footer-logo span { color: var(--gold); }
+.footer-links { display: flex; gap: 2rem; list-style: none; flex-wrap: wrap; }
+.footer-links a { color: rgba(255,255,255,0.35); text-decoration: none; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.3s; }
+.footer-links a:hover { color: var(--gold); }
+footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); }
+
+/* ── SCROLL ANIMATIONS ── */
+.reveal {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1),
+              transform 0.8s cubic-bezier(0.22,1,0.36,1);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-center { display: none; }
+  .section { padding: 4.5rem 1.5rem; }
+  .about-split, .exp-block, .contact-split, .pricing-cards { grid-template-columns: 1fr; }
+  .about-right { grid-template-columns: 1fr 1fr; }
+  .about-left { border-right: none; border-bottom: 1px solid var(--fog); padding: 3rem; }
+  .exp-block.reverse { direction: ltr; }
+  .exp-visual { min-height: 280px; }
+  .exp-content { padding: 3rem; }
+  .amenities-grid { grid-template-columns: repeat(2, 1fr); }
+  .weekend-grid { grid-template-columns: 1fr 1fr; }
+  .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: repeat(3, 200px); }
+  .gal-item:first-child { grid-row: auto; }
+  .reviews-grid { grid-template-columns: 1fr; }
+  .slide-headline { font-size: 2.8rem; }
+  .slider-dots, .slide-arrows { display: none; }
+  footer { flex-direction: column; text-align: center; }
+  body { cursor: auto; }
+  .cursor, .cursor-ring { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="logo-wrap">
+    <div class="logo-main">mountaincoworkingstay<span style="color:var(--gold)">.com</span></div>
+    <div class="logo-sub">Sarainkhet · Almora · Uttarakhand</div>
+  </div>
+  <ul class="nav-center">
+    <li><a href="#about">About</a></li>
+    <li><a href="#amenities">Amenities</a></li>
+    <li><a href="#experiences">Experiences</a></li>
+    <li><a href="#weekend">Weekends</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-book" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Book a Stay</button>
+</nav>
+
+<!-- ══ HERO SLIDER ══ -->
+<section class="hero">
+  <div class="hero-slides" id="heroSlides">
+
+    <!-- Slide 1 — Main Brand -->
+    <div class="hero-slide hs-1">
+      <div class="particles" id="p1"></div>
+      <div class="slide-number">01</div>
+      <div class="slide-tag">Himalayan Alps · 1800m Altitude</div>
+      <h1 class="slide-headline">
+        Work Remotely.<br>
+        <em>Live Wildly.</em>
+      </h1>
+      <p class="slide-body">A coworking homestay in the oak forests of Sarainkhet, Almora — built for remote workers who refuse to choose between a productive workday and an extraordinary life.</p>
+      <div class="slide-actions">
+        <a href="#pricing" class="btn-primary">See Stay Packages</a>
+        <a href="#experiences" class="btn-ghost">Explore Life Here</a>
+      </div>
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Slide 2 — Morning Runs -->
+    <div class="hero-slide hs-2">
+      <div class="particles" id="p2"></div>
+      <div class="slide-number">02</div>
+      <div class="slide-tag">Daily Morning Ritual · 5:30 AM</div>
+      <h1 class="slide-headline">
+        Your morning run<br>
+        <em>is a Himalayan trail.</em>
+      </h1>
+      <p class="slide-body">High-altitude dawn trails through rhododendron and oak. The air is so clean, the views so vast — you'll wonder how you ever ran on a treadmill.</p>
+      <div class="slide-actions">
+        <a href="#experiences" class="btn-primary">See All Experiences</a>
+        <a href="#contact" class="btn-ghost">Enquire Now</a>
+      </div>
+    </div>
+
+    <!-- Slide 3 — Camping -->
+    <div class="hero-slide hs-3">
+      <div class="particles" id="p3"></div>
+      <div class="slide-number">03</div>
+      <div class="slide-tag">Every Weekend · Forest &amp; Alpine</div>
+      <h1 class="slide-headline">
+        Friday deadline.<br>
+        <em>Saturday stars.</em>
+      </h1>
+      <p class="slide-body">Submit your work, pack light, and follow the forest trail to camp under skies so clear the Milky Way feels close enough to touch. Back to your desk Monday, recharged.</p>
+      <div class="slide-actions">
+        <a href="#weekend" class="btn-primary">Weekend Adventures</a>
+        <a href="#pricing" class="btn-ghost">Long Stay Packages</a>
+      </div>
+    </div>
+
+    <!-- Slide 4 — Bike Rides -->
+    <div class="hero-slide hs-4">
+      <div class="particles" id="p4"></div>
+      <div class="slide-number">04</div>
+      <div class="slide-tag">Short Rides · Big Panoramas</div>
+      <h1 class="slide-headline">
+        Two wheels to<br>
+        <em>Nanda Devi.</em>
+      </h1>
+      <p class="slide-body">Mountain roads that twist through pine and deodar, opening suddenly to unobstructed Himalayan peaks — Nanda Devi, Trishul, Panchachuli on clear days. 2–3 hours, unforgettable forever.</p>
+      <div class="slide-actions">
+        <a href="#experiences" class="btn-primary">Our Experiences</a>
+        <a href="#contact" class="btn-ghost">Check Availability</a>
+      </div>
+    </div>
+
+    <!-- Slide 5 — Community -->
+    <div class="hero-slide hs-5">
+      <div class="particles" id="p5"></div>
+      <div class="slide-number">05</div>
+      <div class="slide-tag">Evenings · Bonfire &amp; Community</div>
+      <h1 class="slide-headline">
+        Best ideas happen<br>
+        <em>around the fire.</em>
+      </h1>
+      <p class="slide-body">When the mountain night closes in, the laptop closes too. Gather with fellow remote workers, founders, and creatives around the fire — the collaborations that start here last for years.</p>
+      <div class="slide-actions">
+        <a href="#contact" class="btn-primary">Reserve Your Spot</a>
+        <a href="#about" class="btn-ghost">Our Story</a>
+      </div>
+    </div>
+
+  </div><!-- end slides -->
+
+  <div class="slide-arrows">
+    <button class="sarr" onclick="prevSlide()">←</button>
+    <button class="sarr" onclick="nextSlide()">→</button>
+  </div>
+  <div class="slider-dots" id="sliderDots"></div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Fast WiFi &amp; Power Backup</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Private Rooms at 1800m</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Morning Mountain Runs</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Forest &amp; Alpine Camping</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Himalayan Bike Rides</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Bonfire Community Evenings</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Shared Kitchen &amp; Local Meals</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Sarainkhet · Almora · Uttarakhand</span><span class="marquee-dot">·</span>
+    <!-- Duplicate for seamless loop -->
+    <span class="marquee-item">Fast WiFi &amp; Power Backup</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Private Rooms at 1800m</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Morning Mountain Runs</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Forest &amp; Alpine Camping</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Himalayan Bike Rides</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Bonfire Community Evenings</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Shared Kitchen &amp; Local Meals</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Sarainkhet · Almora · Uttarakhand</span><span class="marquee-dot">·</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about" class="section">
+  <div class="about-split reveal">
+    <div class="about-left">
+      <div class="section-eyebrow">Our Story</div>
+      <h2 class="section-h">A place where<br><em>deep work meets</em><br>wild mountains.</h2>
+      <p>Tucked in the oak and rhododendron forests of Sarainkhet, Almora at 1800 metres, mountaincoworkingstay.com was built for one kind of person: the remote worker who knows that their best thinking happens when they're free.</p>
+      <p>Free from the city. Free from the commute. Free from the grey sameness of a co-working café. Here, the office view is the Himalayas, the commute is a forest trail, and the afternoon break is a bike ride to a panorama that stops you in your tracks.</p>
+      <p>Minimum 7 nights. We are selective because we believe the right community makes everything better — stay longer, think deeper, live fully.</p>
+    </div>
+    <div class="about-right">
+      <div class="about-stat-box">
+        <div class="stat-bg-num">1800</div>
+        <div class="stat-val">1800<em style="font-size:1.5rem;color:var(--lichen)">m</em></div>
+        <div class="stat-name">Above Sea Level</div>
+      </div>
+      <div class="about-stat-box accent-box">
+        <div class="stat-bg-num">7</div>
+        <div class="stat-val">7<em style="font-size:1.5rem;color:rgba(255,255,255,0.4)">+</em></div>
+        <div class="stat-name">Night Minimum Stay</div>
+      </div>
+      <div class="about-stat-box accent-box" style="background:var(--fern)">
+        <div class="stat-bg-num">∞</div>
+        <div class="stat-val" style="color:rgba(255,255,255,0.9)">∞</div>
+        <div class="stat-name" style="color:rgba(255,255,255,0.5)">Himalayan Views</div>
+      </div>
+      <div class="about-stat-box">
+        <div class="stat-bg-num">5</div>
+        <div class="stat-val">5</div>
+        <div class="stat-name">Weekend Adventures</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AMENITIES -->
+<section id="amenities" class="section amenities-section">
+  <div class="amenities-inner">
+    <div class="reveal">
+      <div class="section-eyebrow">Facilities</div>
+      <h2 class="section-h">Everything you need.<br><em>Nothing you don't.</em></h2>
+    </div>
+    <div class="amenities-grid reveal reveal-delay-1">
+      <div class="amenity-card">
+        <div class="am-icon">📶</div>
+        <div class="am-title">Fast WiFi & Power Backup</div>
+        <p class="am-desc">High-speed wired and wireless internet with reliable backup power. Video calls, big uploads, async work — all handled without frustration in the hills.</p>
+      </div>
+      <div class="amenity-card">
+        <div class="am-icon">🛏️</div>
+        <div class="am-title">Private Rooms</div>
+        <p class="am-desc">Clean, cosy private rooms with daily housekeeping, fresh linen, and hot water. Your personal space to recharge fully after a day of deep work and mountain air.</p>
+      </div>
+      <div class="amenity-card">
+        <div class="am-icon">🍳</div>
+        <div class="am-title">Shared Kitchen</div>
+        <p class="am-desc">A fully equipped communal kitchen stocked with local produce and Kumaoni staples. Cook when you want, share meals, spontaneously collaborate over chai.</p>
+      </div>
+      <div class="amenity-card">
+        <div class="am-icon">🔥</div>
+        <div class="am-title">Bonfire Evenings</div>
+        <p class="am-desc">When the mountain night closes in, gather around the fire. Structured or spontaneous — these are the conversations that lead to collaborations and friendships that last.</p>
+      </div>
+      <div class="amenity-card">
+        <div class="am-icon">🥾</div>
+        <div class="am-title">Morning Run & Walk</div>
+        <p class="am-desc">Guided and self-guided dawn trails through alpine forest. High-altitude running that resets your nervous system better than any meditation app ever could.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCES - ALTERNATING FULL-WIDTH BLOCKS -->
+<section id="experiences">
+  <!-- Block 1: Morning Runs -->
+  <div class="exp-block reveal">
+    <div class="exp-visual">
+      <div class="ev-inner ev-1">
+        <span style="position:relative;z-index:2">🌄</span>
+        <div class="ev-overlay"></div>
+      </div>
+    </div>
+    <div class="exp-content">
+      <div class="exp-num">01</div>
+      <h3 class="exp-title">High-Altitude<br><em>Morning Trails</em></h3>
+      <p class="exp-body">There's a particular quality of light in the Himalayas just before sunrise — amber, thin, and impossibly quiet. Lace up and hit the trail at 5:30 AM. The forest breathes around you. The air at 1800 metres clears your mind in ways no productivity hack can replicate. Return to your desk with sharper focus than you've had in years.</p>
+      <div class="exp-pills">
+        <span class="pill">Daily · 5:30 AM</span>
+        <span class="pill">Guided Option</span>
+        <span class="pill">All Fitness Levels</span>
+        <span class="pill">45–90 mins</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Block 2: Coworking -->
+  <div class="exp-block reverse reveal">
+    <div class="exp-visual">
+      <div class="ev-inner ev-2">
+        <span style="position:relative;z-index:2">💻</span>
+        <div class="ev-overlay" style="background:linear-gradient(to left, rgba(0,0,0,0.3), transparent)"></div>
+      </div>
+    </div>
+    <div class="exp-content">
+      <div class="exp-num">02</div>
+      <h3 class="exp-title">Coworking with<br><em>a Mountain View</em></h3>
+      <p class="exp-body">A quiet, dedicated workspace overlooking the forest canopy and, on clear days, the distant Himalayan snowline. Fast internet, ergonomic setup, power backup, and the kind of focus that only comes when your mind knows it's exactly where it should be. Deep work is easy here.</p>
+      <div class="exp-pills">
+        <span class="pill">Fast WiFi</span>
+        <span class="pill">Power Backup</span>
+        <span class="pill">Quiet Hours</span>
+        <span class="pill">Video-Call Ready</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Block 3: Camping -->
+  <div class="exp-block reveal">
+    <div class="exp-visual">
+      <div class="ev-inner ev-3">
+        <span style="position:relative;z-index:2">🏕️</span>
+        <div class="ev-overlay"></div>
+      </div>
+    </div>
+    <div class="exp-content">
+      <div class="exp-num">03</div>
+      <h3 class="exp-title">Forest &amp; Alpine<br><em>Weekend Camping</em></h3>
+      <p class="exp-body">Every weekend, the mountains call and you answer. Trek to a forest clearing or an open alpine meadow. Set up camp. Cook over fire. Sleep under a sky so dark and star-heavy it recalibrates something deep inside you. Wake before dawn, watch the Himalayas turn pink, and hike back in time for breakfast. Then do it all again from your coworking desk on Monday.</p>
+      <div class="exp-pills">
+        <span class="pill">Forest Camps</span>
+        <span class="pill">Alpine Meadows</span>
+        <span class="pill">Campfire Cooking</span>
+        <span class="pill">Every Weekend</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Block 4: Bike Rides -->
+  <div class="exp-block reverse reveal">
+    <div class="exp-visual">
+      <div class="ev-inner ev-4">
+        <span style="position:relative;z-index:2">🚵</span>
+        <div class="ev-overlay" style="background:linear-gradient(to left, rgba(0,0,0,0.3), transparent)"></div>
+      </div>
+    </div>
+    <div class="exp-content">
+      <div class="exp-num">04</div>
+      <h3 class="exp-title">Himalayan<br><em>Bike Rides</em></h3>
+      <p class="exp-body">Quiet mountain roads through pine and deodar forest, climbing steadily until the treeline breaks and the full sweep of the Himalayan range opens before you. Nanda Devi. Trishul. Panchachuli. These 2–3 hour rides are short on distance and immeasurable in impact. No gym subscription required — the mountain keeps you fit.</p>
+      <div class="exp-pills">
+        <span class="pill">2–3 Hour Rides</span>
+        <span class="pill">Himalayan Panoramas</span>
+        <span class="pill">Mountain Roads</span>
+        <span class="pill">All Skill Levels</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WEEKEND SCHEDULE -->
+<section id="weekend" class="section weekend-section">
+  <div class="weekend-inner">
+    <div class="reveal">
+      <div class="section-eyebrow">The Weekend Rhythm</div>
+      <h2 class="section-h">Work hard.<br><em>Adventure harder.</em></h2>
+    </div>
+    <div class="weekend-grid reveal reveal-delay-1">
+      <div class="wday">
+        <span class="wday-time">Friday Evening</span>
+        <span class="wday-icon">🔥</span>
+        <div class="wday-name">Bonfire Night</div>
+        <p class="wday-desc">The week ends around the fire. Community gathering, chai, stories — the kind of evening where the best ideas happen by accident and new friendships form.</p>
+        <div class="wday-tags">
+          <span class="wtag">Community</span>
+          <span class="wtag">Open Fire</span>
+          <span class="wtag">Shared Kitchen</span>
+        </div>
+      </div>
+      <div class="wday">
+        <span class="wday-time">Saturday Morning</span>
+        <span class="wday-icon">🥾</span>
+        <div class="wday-name">Trek to Camp</div>
+        <p class="wday-desc">Trail into forest or up to alpine meadows. A guided or self-guided trek through landscapes that feel genuinely remote, peaceful, and wild.</p>
+        <div class="wday-tags">
+          <span class="wtag">Forest Trek</span>
+          <span class="wtag">Alpine Route</span>
+          <span class="wtag">2–4 hrs</span>
+        </div>
+      </div>
+      <div class="wday" style="background:rgba(201,168,76,0.08)">
+        <span class="wday-time">Saturday Night</span>
+        <span class="wday-icon">⭐</span>
+        <div class="wday-name">Camp Under Stars</div>
+        <p class="wday-desc">Sleep under skies unpolluted by city light. The Milky Way is not an abstraction here — it's directly overhead, dense and bright, filling the whole sky.</p>
+        <div class="wday-tags">
+          <span class="wtag">Stargazing</span>
+          <span class="wtag">Campfire Cook</span>
+          <span class="wtag">Deep Forest</span>
+        </div>
+      </div>
+      <div class="wday">
+        <span class="wday-time">Sunday</span>
+        <span class="wday-icon">🚵</span>
+        <div class="wday-name">Himalayan Bike &amp; Rest</div>
+        <p class="wday-desc">Sunday morning ride to a panoramic viewpoint. Return by afternoon. Slow lunch, light reading, optional yoga on the terrace. Monday-ready by sunset.</p>
+        <div class="wday-tags">
+          <span class="wtag">Bike Ride</span>
+          <span class="wtag">Views</span>
+          <span class="wtag">Rest &amp; Reset</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="section pricing-section">
+  <div class="pricing-inner">
+    <div class="reveal">
+      <div class="section-eyebrow">Stay Packages</div>
+      <h2 class="section-h">Simple, all-inclusive<br><em>pricing.</em></h2>
+    </div>
+    <div class="pricing-cards reveal reveal-delay-1">
+      <div class="p-card">
+        <div class="p-type">Short Escape</div>
+        <div class="p-title">One Week Stay</div>
+        <div class="p-price">₹699<sub>/night</sub></div>
+        <div class="p-min">7-night minimum</div>
+        <div class="p-divider"></div>
+        <ul class="p-features">
+          <li>Private room & daily housekeeping</li>
+          <li>High-speed WiFi + power backup</li>
+          <li>Shared kitchen access</li>
+          <li>Morning trail runs</li>
+          <li>1 weekend camping trip</li>
+          <li>Bonfire evenings</li>
+          <li>Himalayan bike ride</li>
+        </ul>
+        <a href="#contact" class="p-btn">Enquire →</a>
+      </div>
+      <div class="p-card featured">
+        <div class="p-type">Best Value</div>
+        <div class="p-title">Month-Long Stay</div>
+        <div class="p-price">₹549<sub>/night</sub></div>
+        <div class="p-min">28–31 nights · Save ~21%</div>
+        <div class="p-divider"></div>
+        <ul class="p-features">
+          <li>Everything in One Week</li>
+          <li>All weekend adventures included</li>
+          <li>Access to full shared kitchen</li>
+          <li>Community events & meetups</li>
+          <li>Flexible check-in/out times</li>
+          <li>Priority room selection</li>
+          <li>Monthly rate lock guarantee</li>
+        </ul>
+        <a href="#contact" class="p-btn">Enquire →</a>
+      </div>
+      <div class="p-card">
+        <div class="p-type">Extended Work Retreat</div>
+        <div class="p-title">3+ Month Stay</div>
+        <div class="p-price">₹449<sub>/night</sub></div>
+        <div class="p-min">90+ nights · Best rate</div>
+        <div class="p-divider"></div>
+        <ul class="p-features">
+          <li>Everything in Month-Long</li>
+          <li>Dedicated personal workspace</li>
+          <li>Guest privileges (bring a friend)</li>
+          <li>Custom adventure scheduling</li>
+          <li>Seasonal experience access</li>
+          <li>Direct host contact</li>
+          <li>First refusal on return stays</li>
+        </ul>
+        <a href="#contact" class="p-btn">Enquire →</a>
+      </div>
+    </div>
+    <p style="text-align:center; margin-top:1.5rem; font-size:0.78rem; color:#8a9a82;">All prices include room, shared facilities, and weekend experiences. Meals available at cost. Contact for exact availability.</p>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section reviews-section">
+  <div class="reviews-inner">
+    <div class="reveal">
+      <div class="section-eyebrow">Guest Stories</div>
+      <h2 class="section-h">From people who<br><em>stayed and loved it.</em></h2>
+    </div>
+    <div class="reviews-grid reveal reveal-delay-1">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">I came for two weeks and left after six. The WiFi is solid enough for daily standups, the morning runs destroyed my gym habit in the best way, and I launched a side project I'd been procrastinating for two years.</p>
+        <div class="review-author">Rahul M.</div>
+        <div class="review-role">Product Designer · Bangalore</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">The weekend camping under Himalayan stars is alone worth the trip. But it's the combination — deep work days, bonfire evenings, trail mornings — that makes this place genuinely transformative rather than just a pretty escape.</p>
+        <div class="review-author">Sarah K.</div>
+        <div class="review-role">Freelance Developer · Berlin</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">The shared kitchen became the real coworking space. Three of us cooked together every evening, and two of those people are now business partners. The mountains just seem to make people open and creative.</p>
+        <div class="review-author">Priya &amp; Aditya</div>
+        <div class="review-role">Remote Team · Mumbai &amp; Pune</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<div class="gallery-section reveal">
+  <div class="gallery-grid">
+    <div class="gal-item">
+      <div class="gal-bg gb1">🏔️</div>
+      <div class="gal-cap">Himalayan Panorama from the Trail</div>
+    </div>
+    <div class="gal-item">
+      <div class="gal-bg gb2">🌅</div>
+      <div class="gal-cap">Dawn Run · Forest Trail</div>
+    </div>
+    <div class="gal-item">
+      <div class="gal-bg gb3">🔥</div>
+      <div class="gal-cap">Friday Bonfire Community Night</div>
+    </div>
+    <div class="gal-item">
+      <div class="gal-bg gb4">💻</div>
+      <div class="gal-cap">Coworking Workspace with Forest View</div>
+    </div>
+    <div class="gal-item">
+      <div class="gal-bg gb5">⭐</div>
+      <div class="gal-cap">Alpine Camp · Stargazing Night</div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact" class="section contact-section">
+  <div class="contact-inner">
+    <div class="reveal">
+      <div class="section-eyebrow">Get In Touch</div>
+      <h2 class="section-h">Ready for the<br><em>mountains?</em></h2>
+    </div>
+    <div class="contact-split reveal reveal-delay-1">
+      <div class="contact-left">
+        <p>Tell us your dates, your work setup, and what you're hoping for. We reply within 24 hours with availability and a real conversation — no automated booking portals, just honest communication.</p>
+        <p>We prioritise guests who plan to stay at least a week and make the most of what the mountains have to offer. If that's you, we'd love to hear from you.</p>
+        <div class="contact-details">
+          <div class="cdet">
+            <div class="cdet-icon">📍</div>
+            <div>
+              <div class="cdet-label">Location</div>
+              <div class="cdet-val">Sarainkhet, Almora District, Uttarakhand — 263601</div>
+            </div>
+          </div>
+          <div class="cdet">
+            <div class="cdet-icon">🌐</div>
+            <div>
+              <div class="cdet-label">Website</div>
+              <div class="cdet-val"><a href="#">mountaincoworkingstay.com</a></div>
+            </div>
+          </div>
+          <div class="cdet">
+            <div class="cdet-icon">📧</div>
+            <div>
+              <div class="cdet-label">Email</div>
+              <div class="cdet-val"><a href="mailto:stay@mountaincoworkingstay.com">stay@mountaincoworkingstay.com</a></div>
+            </div>
+          </div>
+          <div class="cdet">
+            <div class="cdet-icon">📱</div>
+            <div>
+              <div class="cdet-label">WhatsApp / Phone</div>
+              <div class="cdet-val"><a href="tel:+919999999999">+91 99999 99999</a></div>
+            </div>
+          </div>
+          <div class="cdet">
+            <div class="cdet-icon">📸</div>
+            <div>
+              <div class="cdet-label">Instagram</div>
+              <div class="cdet-val"><a href="#">@mountaincoworkingstay</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form-wrap">
+        <div class="cf-row">
+          <div class="cf-field">
+            <label>Your Name</label>
+            <input type="text" placeholder="Priya Sharma">
+          </div>
+          <div class="cf-field">
+            <label>Email Address</label>
+            <input type="email" placeholder="you@yourwork.com">
+          </div>
+        </div>
+        <div class="cf-row">
+          <div class="cf-field">
+            <label>Arrival Date</label>
+            <input type="date">
+          </div>
+          <div class="cf-field">
+            <label>How Long?</label>
+            <select>
+              <option value="">Select duration...</option>
+              <option>1–2 weeks</option>
+              <option>3–4 weeks</option>
+              <option>1–2 months</option>
+              <option>3+ months</option>
+            </select>
+          </div>
+        </div>
+        <div class="cf-field">
+          <label>Number of People</label>
+          <select>
+            <option>Just me</option>
+            <option>2 people</option>
+            <option>3–4 people (small team)</option>
+            <option>5+ people (group / company retreat)</option>
+          </select>
+        </div>
+        <div class="cf-field">
+          <label>About You &amp; What You're Looking For</label>
+          <textarea rows="4" placeholder="What do you do, your remote work setup, what excites you about staying here, any questions..."></textarea>
+        </div>
+        <button class="cf-submit">Send Enquiry →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">mountaincoworkingstay<span>.com</span></div>
+    <p style="font-size:0.7rem; color:rgba(255,255,255,0.25); margin-top:0.3rem;">Sarainkhet · Almora · Uttarakhand · India</p>
+  </div>
+  <ul class="footer-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#amenities">Amenities</a></li>
+    <li><a href="#experiences">Experiences</a></li>
+    <li><a href="#weekend">Weekends</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <p>© 2025 mountaincoworkingstay.com · Built at 1800m</p>
+</footer>
+
+<script>
+// ── CURSOR ──
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+const animCursor = () => {
+  cursor.style.left = mx + 'px';
+  cursor.style.top = my + 'px';
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.left = rx + 'px';
+  ring.style.top = ry + 'px';
+  requestAnimationFrame(animCursor);
+};
+animCursor();
+document.querySelectorAll('a, button, .amenity-card, .wday, .gal-item, .review-card').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.transform = 'translate(-50%,-50%) scale(2.5)';
+    ring.style.transform = 'translate(-50%,-50%) scale(1.4)';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+    ring.style.transform = 'translate(-50%,-50%) scale(1)';
+  });
+});
+
+// ── HERO SLIDER ──
+let current = 0;
+const total = 5;
+const slidesEl = document.getElementById('heroSlides');
+const dotsEl = document.getElementById('sliderDots');
+
+for (let i = 0; i < total; i++) {
+  const d = document.createElement('button');
+  d.className = 'sdot' + (i === 0 ? ' active' : '');
+  d.onclick = () => goTo(i);
+  dotsEl.appendChild(d);
+}
+
+function goTo(n) {
+  current = (n + total) % total;
+  slidesEl.style.transform = `translateX(-${current * 100}%)`;
+  slidesEl.style.transition = 'transform 0.9s cubic-bezier(0.77,0,0.175,1)';
+  document.querySelectorAll('.sdot').forEach((d, i) => d.classList.toggle('active', i === current));
+  // restart progress bar
+  const pb = document.getElementById('progressBar');
+  if (pb) { pb.style.animation = 'none'; pb.offsetHeight; pb.style.animation = ''; }
+}
+function nextSlide() { goTo(current + 1); }
+function prevSlide() { goTo(current - 1); }
+
+let autoTimer = setInterval(nextSlide, 5500);
+slidesEl.addEventListener('mouseenter', () => clearInterval(autoTimer));
+slidesEl.addEventListener('mouseleave', () => { autoTimer = setInterval(nextSlide, 5500); });
+
+// ── NAV SCROLL ──
+window.addEventListener('scroll', () => {
+  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 80);
+});
+
+// ── PARTICLES ──
+const particleColors = ['#c9a84c','#8aac7e','#ffffff','#d4813a'];
+for (let s = 1; s <= 5; s++) {
+  const container = document.getElementById('p' + s);
+  if (!container) continue;
+  for (let i = 0; i < 12; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random() * 4 + 1;
+    p.style.cssText = `
+      width:${size}px; height:${size}px;
+      background:${particleColors[Math.floor(Math.random()*particleColors.length)]};
+      left:${Math.random()*100}%;
+      animation-duration:${Math.random()*15+10}s;
+      animation-delay:${Math.random()*10}s;
+      opacity:0;
+    `;
+    container.appendChild(p);
+  }
+}
+
+// ── SCROLL REVEAL ──
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

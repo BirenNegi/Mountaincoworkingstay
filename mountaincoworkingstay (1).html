@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mountain Coworking Stay — Sarainkhet, Almora</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#151a12;--forest:#243b1e;--fern:#4c7343;--lichen:#8aac7e;--fog:#d4dece;--parchment:#f5f1e8;--paper:#fdfaf4;--ember:#d4813a;--gold:#c9a84c}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--paper);color:var(--ink);overflow-x:hidden}
+nav{position:fixed;top:0;width:100%;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 3rem;transition:all .4s}
+nav.scrolled{background:rgba(21,26,18,.95);backdrop-filter:blur(12px);padding:.8rem 3rem;border-bottom:1px solid rgba(201,168,76,.15)}
+.logo-main{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:#fff}
+.logo-main span{color:var(--gold)}
+.logo-sub{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-top:2px}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:rgba(255,255,255,.75);text-decoration:none;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;transition:color .3s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{background:none;border:1px solid rgba(255,255,255,.4);color:#fff;padding:.5rem 1.4rem;font-family:'Outfit',sans-serif;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .3s}
+.nav-cta:hover{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+.hero{height:100vh;position:relative;overflow:hidden;background:var(--forest)}
+.hero-slides{display:flex;height:100%;transition:transform .9s cubic-bezier(.77,0,.175,1)}
+.hslide{min-width:100%;height:100%;position:relative;display:flex;flex-direction:column;justify-content:flex-end;padding:5rem 3rem;overflow:hidden}
+.hslide-bg{position:absolute;inset:0;background-size:cover;background-position:center;animation:kb 12s ease-in-out infinite alternate}
+@keyframes kb{from{transform:scale(1)}to{transform:scale(1.07)}}
+.hslide-ov{position:absolute;inset:0;background:linear-gradient(160deg,rgba(8,16,8,.78) 0%,rgba(8,16,8,.3) 100%)}
+.hslide>*:not(.hslide-bg):not(.hslide-ov){position:relative;z-index:2}
+.stag{display:inline-flex;align-items:center;gap:.6rem;font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem}
+.stag::before{content:'';display:block;width:22px;height:1px;background:var(--gold)}
+.sh{font-family:'Cormorant Garamond',serif;font-size:clamp(2.8rem,7vw,5.8rem);font-weight:300;line-height:.95;color:#fff;max-width:680px;margin-bottom:1.4rem}
+.sh em{font-style:italic;color:var(--gold);display:block}
+.sp{color:rgba(255,255,255,.62);font-size:.9rem;max-width:410px;line-height:1.82;font-weight:300;margin-bottom:2rem}
+.sbtns{display:flex;gap:1rem;align-items:center}
+.btn-g{background:var(--gold);color:var(--ink);border:none;padding:.82rem 1.9rem;font-family:'Outfit',sans-serif;font-size:.73rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block}
+.btn-g:hover{background:#fff}
+.btn-gh{color:rgba(255,255,255,.62);font-size:.73rem;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:center;gap:.4rem;transition:color .3s}
+.btn-gh::after{content:'→';transition:transform .3s}
+.btn-gh:hover{color:#fff}
+.btn-gh:hover::after{transform:translateX(4px)}
+.snum{position:absolute;top:50%;right:3rem;transform:translateY(-50%);font-family:'Cormorant Garamond',serif;font-size:7rem;font-weight:300;color:rgba(255,255,255,.04);pointer-events:none;z-index:1}
+.progress{position:absolute;bottom:0;left:0;height:2px;background:var(--gold);animation:prg 5.5s linear infinite}
+@keyframes prg{from{width:0}to{width:100%}}
+.hdots{position:absolute;right:3rem;bottom:2.5rem;display:flex;flex-direction:column;gap:.5rem;z-index:10}
+.hdot{width:2px;height:18px;background:rgba(255,255,255,.18);border:none;cursor:pointer;transition:all .3s;position:relative}
+.hdot::after{content:'';position:absolute;top:0;left:0;width:100%;height:0;background:var(--gold);transition:height .3s}
+.hdot.on{height:32px}
+.hdot.on::after{height:100%}
+.harrs{position:absolute;left:3rem;bottom:2.5rem;display:flex;gap:.5rem;z-index:10}
+.harr{width:42px;height:42px;border:1px solid rgba(255,255,255,.18);background:none;color:rgba(255,255,255,.55);font-size:1rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s}
+.harr:hover{border-color:var(--gold);color:var(--gold)}
+.marquee{background:var(--ink);overflow:hidden;padding:.9rem 0;border-top:1px solid rgba(201,168,76,.18);border-bottom:1px solid rgba(201,168,76,.18)}
+.mtrack{display:flex;gap:2.5rem;white-space:nowrap;animation:mq 28s linear infinite}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.mtrack span{font-family:'Cormorant Garamond',serif;font-size:.88rem;font-style:italic;color:rgba(255,255,255,.38);flex-shrink:0}
+.mtrack b{color:var(--gold);margin:0 .4rem}
+.sec{padding:6rem 3rem}
+.ey{display:flex;align-items:center;gap:.8rem;font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--fern);margin-bottom:.8rem}
+.ey::before{content:'';display:block;width:20px;height:1px;background:var(--fern)}
+.seh{font-family:'Cormorant Garamond',serif;font-size:clamp(2.1rem,4vw,3.4rem);font-weight:300;line-height:1.1;color:var(--ink)}
+.seh em{font-style:italic;color:var(--fern)}
+.about-wrap{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--fog)}
+.al{padding:4rem;border-right:1px solid var(--fog)}
+.al p{color:#5a6a52;line-height:1.9;margin-top:1.4rem;font-weight:300;font-size:.93rem}
+.astats{display:grid;grid-template-columns:1fr 1fr}
+.ast{padding:2.4rem;border-right:1px solid var(--fog);border-bottom:1px solid var(--fog);position:relative;overflow:hidden}
+.ast:nth-child(2){border-right:none}
+.ast:nth-child(3){border-bottom:none}
+.ast:nth-child(4){border-right:none;border-bottom:none;background:var(--forest)}
+.ast-bg{position:absolute;top:-.4rem;left:.4rem;font-family:'Cormorant Garamond',serif;font-size:5rem;font-weight:300;opacity:.05;color:var(--fern);line-height:1;pointer-events:none}
+.ast-v{font-family:'Cormorant Garamond',serif;font-size:2.7rem;font-weight:300;color:var(--ink);line-height:1}
+.ast-l{font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--lichen);margin-top:.3rem}
+.ast:nth-child(4) .ast-v{color:var(--gold)}
+.ast:nth-child(4) .ast-l{color:rgba(255,255,255,.4)}
+.am-bg{background:var(--parchment)}
+.am-in{max-width:1300px;margin:0 auto}
+.am-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--fog);border:1px solid var(--fog);margin-top:3.5rem}
+.amc{background:var(--paper);padding:2.4rem 1.7rem 2.7rem;position:relative;overflow:hidden;transition:background .3s}
+.amc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:0;background:var(--forest);transition:height .35s}
+.amc:hover{background:#f0ede3}
+.amc:hover::after{height:3px}
+.ami{width:44px;height:44px;background:var(--fog);display:flex;align-items:center;justify-content:center;font-size:1.25rem;margin-bottom:1.3rem;transition:background .3s;position:relative;z-index:1}
+.amc:hover .ami{background:var(--lichen)}
+.amt{font-family:'Cormorant Garamond',serif;font-size:1.12rem;color:var(--ink);margin-bottom:.55rem;position:relative;z-index:1}
+.amd{font-size:.77rem;color:#6a7a60;line-height:1.72;font-weight:300;position:relative;z-index:1}
+.expb{display:grid;grid-template-columns:1fr 1fr;min-height:500px}
+.expb.rv{direction:rtl}
+.expb.rv>*{direction:ltr}
+.evis{display:flex;align-items:center;justify-content:center;font-size:5rem;position:relative;overflow:hidden;min-height:340px}
+.ev1{background:linear-gradient(135deg,#0f2a1a,#2d6a40)}
+.ev2{background:linear-gradient(135deg,#0a1525,#1e3555)}
+.ev3{background:linear-gradient(135deg,#25100a,#503020)}
+.ev4{background:linear-gradient(135deg,#101f14,#253a2a)}
+.eco{padding:4rem;display:flex;flex-direction:column;justify-content:center;background:var(--paper)}
+.expb.rv .eco{background:var(--parchment)}
+.en{font-family:'Cormorant Garamond',serif;font-size:4.5rem;font-weight:300;color:var(--fog);line-height:1;margin-bottom:.7rem}
+.et{font-family:'Cormorant Garamond',serif;font-size:2.3rem;font-weight:300;line-height:1.15;color:var(--ink);margin-bottom:.9rem}
+.et em{font-style:italic;color:var(--fern)}
+.eb{color:#5a6a52;line-height:1.9;font-size:.88rem;font-weight:300;margin-bottom:1.4rem}
+.pills{display:flex;flex-wrap:wrap;gap:.45rem}
+.pill{padding:.22rem .8rem;border:1px solid var(--fog);font-size:.63rem;letter-spacing:.08em;color:var(--fern);text-transform:uppercase}
+.wk-bg{background:var(--forest);color:#fff}
+.wki{max-width:1300px;margin:0 auto}
+.wki .ey{color:rgba(200,216,196,.45)}
+.wki .ey::before{background:var(--gold)}
+.wki .seh{color:#fff}
+.wki .seh em{color:var(--gold)}
+.wk-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.06);margin-top:3.5rem}
+.wkc{background:var(--forest);padding:2.4rem 1.9rem;transition:background .3s}
+.wkc:hover{background:rgba(255,255,255,.04)}
+.wkt{font-size:.6rem;letter-spacing:.17em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:.9rem}
+.wki2{font-size:1.75rem;display:block;margin-bottom:.7rem}
+.wkn{font-family:'Cormorant Garamond',serif;font-size:1.38rem;color:#fff;margin-bottom:.65rem}
+.wkd{font-size:.78rem;color:rgba(255,255,255,.48);line-height:1.8;font-weight:300}
+.wktags{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.9rem}
+.wtag{font-size:.58rem;padding:.18rem .55rem;border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.38);letter-spacing:.07em}
+.pc-grid{display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:1px;background:var(--fog);border:1px solid var(--fog);margin-top:3.5rem;max-width:1100px;margin-left:auto;margin-right:auto}
+.pc{background:var(--paper);padding:2.7rem 2.1rem;display:flex;flex-direction:column}
+.pc.feat{background:var(--forest);color:#fff;position:relative}
+.pc.feat::before{content:'Most Popular';position:absolute;top:0;left:50%;transform:translate(-50%,-50%);background:var(--gold);color:var(--ink);font-size:.6rem;letter-spacing:.13em;text-transform:uppercase;padding:.26rem .85rem;white-space:nowrap}
+.pct{font-size:.63rem;letter-spacing:.17em;text-transform:uppercase;color:var(--lichen);margin-bottom:.75rem}
+.feat .pct{color:rgba(200,216,196,.5)}
+.pcti{font-family:'Cormorant Garamond',serif;font-size:1.55rem;color:var(--ink);margin-bottom:1.2rem}
+.feat .pcti{color:#fff}
+.pcp{font-family:'Cormorant Garamond',serif;font-size:3.1rem;font-weight:300;color:var(--ink);line-height:1}
+.feat .pcp{color:var(--gold)}
+.pcp sub{font-size:.88rem;color:#8a9a82;font-family:'Outfit',sans-serif;font-weight:300}
+.feat .pcp sub{color:rgba(255,255,255,.38)}
+.pcm{font-size:.68rem;color:#8a9a82;margin-top:.28rem}
+.feat .pcm{color:rgba(255,255,255,.38)}
+.pcd{height:1px;background:var(--fog);margin:1.7rem 0}
+.feat .pcd{background:rgba(255,255,255,.1)}
+.pcl{list-style:none;flex:1}
+.pcl li{padding:.42rem 0;font-size:.8rem;color:#5a6a52;border-bottom:1px solid var(--fog);display:flex;gap:.45rem}
+.feat .pcl li{color:rgba(255,255,255,.68);border-bottom-color:rgba(255,255,255,.07)}
+.pcl li::before{content:'·';color:var(--gold);font-size:1rem;flex-shrink:0}
+.pcb{display:block;text-align:center;margin-top:1.7rem;padding:.82rem;font-family:'Outfit',sans-serif;font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:all .3s;border:none}
+.pc:not(.feat) .pcb{border:1px solid var(--fog);color:var(--ink);background:none}
+.pc:not(.feat) .pcb:hover{border-color:var(--fern);color:var(--fern)}
+.feat .pcb{background:var(--gold);color:var(--ink)}
+.feat .pcb:hover{background:#fff}
+.rv-bg{background:var(--parchment)}
+.rv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:3.5rem;max-width:1200px;margin-left:auto;margin-right:auto}
+.rvc{background:#fff;padding:2.1rem;border:1px solid var(--fog);position:relative}
+.rvc::before{content:'"';font-family:'Cormorant Garamond',serif;font-size:5rem;line-height:.6;color:var(--fog);position:absolute;top:1.4rem;right:1.4rem}
+.rvs{color:var(--gold);font-size:.78rem;letter-spacing:.08em;margin-bottom:.9rem}
+.rvt{font-size:.86rem;line-height:1.85;color:#4a5a45;font-weight:300;font-style:italic;margin-bottom:1.3rem}
+.rva{font-size:.76rem;font-weight:500;color:var(--ink)}
+.rvr{font-size:.68rem;color:var(--lichen);letter-spacing:.04em}
+.gal-bg{background:var(--ink);padding:6rem 3rem}
+.gal-in{max-width:1400px;margin:0 auto}
+.gal-in .ey{color:rgba(200,216,196,.42)}
+.gal-in .ey::before{background:var(--gold)}
+.gal-in .seh{color:#fff}
+.gal-in .seh em{color:var(--gold)}
+.gsub{color:rgba(255,255,255,.32);font-size:.8rem;margin:.45rem 0 2.4rem;font-weight:300}
+.gf-row{display:flex;gap:.45rem;flex-wrap:wrap;margin-bottom:2.4rem}
+.gfb{background:none;border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.42);padding:.38rem .95rem;font-family:'Outfit',sans-serif;font-size:.66rem;letter-spacing:.09em;text-transform:uppercase;cursor:pointer;transition:all .3s}
+.gfb.on,.gfb:hover{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+.masonry{columns:4;column-gap:5px}
+.gt{break-inside:avoid;margin-bottom:5px;position:relative;overflow:hidden;cursor:pointer;display:block}
+.gt-ph{width:100%;display:flex;align-items:center;justify-content:center;font-size:2.3rem}
+.gt img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.gt-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.75),transparent);opacity:0;transition:opacity .3s}
+.gt:hover .gt-ov{opacity:1}
+.gt-inf{position:absolute;bottom:0;left:0;right:0;padding:.8rem;transform:translateY(5px);transition:transform .3s}
+.gt:hover .gt-inf{transform:translateY(0)}
+.gt-ti{color:#fff;font-size:.73rem;font-weight:500;letter-spacing:.04em;display:block}
+.gt-ca{color:var(--gold);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;margin-top:.12rem;display:block}
+.gt-z{position:absolute;top:.55rem;right:.55rem;width:26px;height:26px;background:rgba(255,255,255,.14);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.72rem;opacity:0;transition:opacity .3s}
+.gt:hover .gt-z{opacity:1}
+.lb{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.95);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(8px)}
+.lb.open{opacity:1;pointer-events:all}
+.lb-wrap{max-width:88vw;max-height:82vh;display:flex;align-items:center;justify-content:center}
+.lb-wrap img{max-width:88vw;max-height:82vh;object-fit:contain;box-shadow:0 30px 80px rgba(0,0,0,.8)}
+.lb-ph{width:580px;max-width:88vw;height:370px;max-height:82vh;display:flex;align-items:center;justify-content:center;font-size:5.5rem;background:var(--forest)}
+.lb-x{position:fixed;top:1.4rem;right:1.4rem;width:40px;height:40px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.04);color:#fff;font-size:.95rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s}
+.lb-x:hover{background:var(--ember);border-color:var(--ember)}
+.lb-ar{position:fixed;top:50%;transform:translateY(-50%);width:46px;height:46px;border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.04);color:rgba(255,255,255,.62);font-size:1.05rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s}
+.lb-ar:hover{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+.lb-pv{left:1.4rem}
+.lb-nx{right:1.4rem}
+.lb-cp{position:fixed;bottom:3.8rem;left:50%;transform:translateX(-50%);text-align:center;pointer-events:none}
+.lb-cti{color:#fff;font-size:.85rem}
+.lb-cco{color:rgba(255,255,255,.38);font-size:.65rem;margin-top:.22rem;letter-spacing:.09em}
+.lb-str{position:fixed;bottom:.8rem;left:50%;transform:translateX(-50%);display:flex;gap:3px;max-width:90vw;overflow-x:auto}
+.lb-th{width:46px;height:34px;flex-shrink:0;opacity:.32;cursor:pointer;transition:opacity .2s;border:1.5px solid transparent;background:var(--forest);display:flex;align-items:center;justify-content:center;font-size:.85rem}
+.lb-th img{width:100%;height:100%;object-fit:cover;display:block}
+.lb-th.on{opacity:1;border-color:var(--gold)}
+.ct-grid{max-width:1000px;margin:3.5rem auto 0;display:grid;grid-template-columns:1fr 1.4fr;gap:4rem}
+.ctl p{color:#5a6a52;line-height:1.9;font-size:.88rem;font-weight:300;margin-bottom:1.8rem}
+.ctd{display:flex;flex-direction:column;gap:.85rem}
+.cd{display:flex;gap:.85rem;align-items:flex-start;padding-bottom:.85rem;border-bottom:1px solid var(--fog)}
+.cd:last-child{border-bottom:none}
+.cdi{width:32px;height:32px;background:var(--fog);display:flex;align-items:center;justify-content:center;font-size:.82rem;flex-shrink:0}
+.cdl{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--lichen)}
+.cdv{font-size:.82rem;color:var(--ink);margin-top:.13rem}
+.cdv a{color:var(--ink);text-decoration:none}
+.cdv a:hover{color:var(--fern)}
+.cf{display:flex;flex-direction:column;gap:.95rem}
+.cf-row{display:grid;grid-template-columns:1fr 1fr;gap:.95rem}
+.cff{display:flex;flex-direction:column;gap:.32rem}
+.cff label{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--lichen)}
+.cff input,.cff select,.cff textarea{background:#fff;border:1px solid var(--fog);padding:.78rem .88rem;font-family:'Outfit',sans-serif;font-size:.83rem;color:var(--ink);outline:none;transition:border-color .3s;resize:vertical;-webkit-appearance:none}
+.cff input:focus,.cff select:focus,.cff textarea:focus{border-color:var(--fern)}
+.cf-btns{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:.25rem}
+.btn-email{background:var(--forest);color:#fff;border:none;padding:.88rem 1.75rem;font-family:'Outfit',sans-serif;font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;cursor:pointer;transition:all .3s}
+.btn-email:hover{background:var(--fern)}
+.btn-wa{background:#25D366;color:#fff;border:none;padding:.88rem 1.75rem;font-family:'Outfit',sans-serif;font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;cursor:pointer;transition:all .3s;display:flex;align-items:center;gap:.45rem}
+.btn-wa:hover{background:#1ebe58}
+.cf-note{font-size:.65rem;color:#8a9a82;margin-top:.45rem;line-height:1.6}
+.cf-ok{display:none;margin-top:.75rem;padding:.85rem 1rem;background:#e8f5e2;border-left:3px solid var(--fern);color:#2a4a1a;font-size:.8rem;line-height:1.6}
+.wa-float{position:fixed;bottom:1.8rem;right:1.8rem;z-index:500;display:flex;flex-direction:column;align-items:flex-end;gap:.75rem}
+.wa-pop{background:#fff;border-radius:12px;box-shadow:0 8px 40px rgba(0,0,0,.16);width:285px;overflow:hidden;opacity:0;transform:scale(.9) translateY(10px);transform-origin:bottom right;transition:all .3s cubic-bezier(.34,1.56,.64,1);pointer-events:none}
+.wa-pop.open{opacity:1;transform:scale(1) translateY(0);pointer-events:all}
+.wa-hd{background:#075E54;padding:.85rem 1rem;display:flex;align-items:center;gap:.65rem}
+.wa-av{width:36px;height:36px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0}
+.wa-hn{color:#fff;font-size:.82rem;font-weight:500}
+.wa-hs{color:rgba(255,255,255,.55);font-size:.63rem;margin-top:1px}
+.wa-cl{margin-left:auto;background:none;border:none;color:rgba(255,255,255,.5);font-size:.95rem;cursor:pointer;line-height:1;padding:.18rem}
+.wa-bd{background:#ECE5DD;padding:1rem}
+.wa-bub{background:#fff;padding:.72rem .88rem;border-radius:8px 8px 8px 0;box-shadow:0 1px 3px rgba(0,0,0,.08);font-size:.76rem;color:#303030;line-height:1.5;max-width:88%;position:relative}
+.wa-bub::before{content:'';position:absolute;left:-5px;top:0;border:5px solid transparent;border-right-color:#fff;border-top:none}
+.wa-bt{color:#aaa;font-size:.57rem;text-align:right;margin-top:.28rem}
+.wa-ft{padding:.72rem;background:#f0f0f0}
+.wa-qi{display:flex;gap:.4rem;margin-bottom:.45rem}
+.wa-qi input{flex:1;border:1px solid #ddd;border-radius:20px;padding:.42rem .88rem;font-family:'Outfit',sans-serif;font-size:.74rem;outline:none;background:#fff}
+.wa-qi button{width:32px;height:32px;border-radius:50%;background:#25D366;border:none;color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.82rem;flex-shrink:0;transition:background .2s}
+.wa-qi button:hover{background:#1ebe58}
+.wa-ol{display:flex;align-items:center;justify-content:center;gap:.38rem;background:#25D366;color:#fff;border-radius:20px;padding:.55rem .88rem;text-decoration:none;font-size:.73rem;font-weight:500;transition:background .2s}
+.wa-ol:hover{background:#1ebe58}
+.wa-btn{width:52px;height:52px;border-radius:50%;background:#25D366;box-shadow:0 4px 18px rgba(37,211,102,.38);display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;transition:transform .3s;animation:wap 2.5s ease infinite}
+@keyframes wap{0%,100%{box-shadow:0 4px 18px rgba(37,211,102,.38)}50%{box-shadow:0 4px 30px rgba(37,211,102,.68),0 0 0 8px rgba(37,211,102,.08)}}
+.wa-btn:hover{transform:scale(1.08)}
+.wa-btn svg{width:26px;height:26px}
+.wa-wrap{position:relative;display:flex;align-items:center}
+.wa-tip{position:absolute;right:60px;top:50%;transform:translateY(-50%);background:var(--ink);color:#fff;padding:.35rem .85rem;border-radius:4px;font-size:.68rem;white-space:nowrap;opacity:0;transition:opacity .3s;pointer-events:none}
+.wa-tip::after{content:'';position:absolute;right:-5px;top:50%;transform:translateY(-50%);border:5px solid transparent;border-right:none;border-left-color:var(--ink)}
+.wa-wrap:hover .wa-tip{opacity:1}
+footer{background:var(--ink);padding:2.4rem 3rem;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(201,168,76,.13);flex-wrap:wrap;gap:1.1rem}
+.fl{font-family:'Cormorant Garamond',serif;font-size:1.08rem;color:#fff}
+.fl span{color:var(--gold)}
+.flo{font-size:.62rem;color:rgba(255,255,255,.22);margin-top:.18rem}
+.flnk{display:flex;gap:1.7rem;list-style:none;flex-wrap:wrap}
+.flnk a{color:rgba(255,255,255,.28);text-decoration:none;font-size:.65rem;letter-spacing:.07em;text-transform:uppercase;transition:color .3s}
+.flnk a:hover{color:var(--gold)}
+.fco{font-size:.65rem;color:rgba(255,255,255,.2)}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .75s cubic-bezier(.22,1,.36,1),transform .75s cubic-bezier(.22,1,.36,1)}
+.reveal.on{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
+@media(max-width:900px){
+  nav{padding:1rem 1.5rem}.nav-links{display:none}
+  .sec{padding:4rem 1.5rem}
+  .about-wrap,.expb,.ct-grid,.pc-grid,.rv-grid{grid-template-columns:1fr}
+  .astats{grid-template-columns:1fr 1fr}
+  .al{border-right:none;border-bottom:1px solid var(--fog);padding:2.5rem}
+  .am-grid{grid-template-columns:repeat(2,1fr)}
+  .wk-grid{grid-template-columns:1fr 1fr}
+  .expb.rv{direction:ltr}.eco{padding:2.5rem}
+  .gal-bg{padding:4rem 1.5rem}.masonry{columns:2}
+  footer{flex-direction:column;text-align:center}
+  .hdots,.harrs{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div>
+    <div class="logo-main">mountaincoworkingstay<span>.com</span></div>
+    <div class="logo-sub">Sarainkhet · Almora · Uttarakhand</div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#amenities">Amenities</a></li>
+    <li><a href="#exp">Experiences</a></li>
+    <li><a href="#weekend">Weekends</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Book a Stay</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-slides" id="heroSlides">
+    <div class="hslide">
+      <div class="hslide-bg" style="background-image:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80&auto=format&fit=crop')"></div>
+      <div class="hslide-ov"></div><div class="snum">01</div>
+      <div class="stag">Himalayan Alps · 1800m Altitude</div>
+      <h1 class="sh">Work Remotely.<br><em>Live Wildly.</em></h1>
+      <p class="sp">A coworking homestay in the oak forests of Sarainkhet — built for remote workers who refuse to choose between a great workday and an extraordinary life.</p>
+      <div class="sbtns"><a href="#pricing" class="btn-g">See Packages</a><a href="#exp" class="btn-gh">Explore Life Here</a></div>
+      <div class="progress"></div>
+    </div>
+    <div class="hslide">
+      <div class="hslide-bg" style="background-image:url('hero2.jpg');background-color:#0d2035"></div>
+      <div class="hslide-ov"></div><div class="snum">02</div>
+      <div class="stag">Daily Morning Ritual · 5:30 AM</div>
+      <h1 class="sh">Your morning run<br><em>is a Himalayan trail.</em></h1>
+      <p class="sp">High-altitude dawn trails through rhododendron and oak. Air so clean, views so vast — you'll wonder how you ever ran on a treadmill.</p>
+      <div class="sbtns"><a href="#exp" class="btn-g">Experiences</a><a href="#contact" class="btn-gh">Enquire Now</a></div>
+    </div>
+    <div class="hslide">
+      <div class="hslide-bg" style="background-image:url('hero3.jpg');background-color:#221008"></div>
+      <div class="hslide-ov"></div><div class="snum">03</div>
+      <div class="stag">Every Weekend · Forest &amp; Alpine</div>
+      <h1 class="sh">Friday deadline.<br><em>Saturday stars.</em></h1>
+      <p class="sp">Submit your work, pack light, and camp under skies so clear the Milky Way feels close enough to touch. Back at your desk Monday, recharged.</p>
+      <div class="sbtns"><a href="#weekend" class="btn-g">Weekend Adventures</a><a href="#pricing" class="btn-gh">Long Stay Packages</a></div>
+    </div>
+    <div class="hslide">
+      <div class="hslide-bg" style="background-image:url('hero4.jpg');background-color:#0f2018"></div>
+      <div class="hslide-ov"></div><div class="snum">04</div>
+      <div class="stag">Short Rides · Big Panoramas</div>
+      <h1 class="sh">Two wheels to<br><em>Nanda Devi.</em></h1>
+      <p class="sp">Mountain roads through pine and deodar, opening suddenly to Himalayan peaks — Nanda Devi, Trishul, Panchachuli on clear days.</p>
+      <div class="sbtns"><a href="#exp" class="btn-g">Our Experiences</a><a href="#contact" class="btn-gh">Check Availability</a></div>
+    </div>
+    <div class="hslide">
+      <div class="hslide-bg" style="background-image:url('hero5.jpg');background-color:#150d28"></div>
+      <div class="hslide-ov"></div><div class="snum">05</div>
+      <div class="stag">Evenings · Bonfire &amp; Community</div>
+      <h1 class="sh">Best ideas happen<br><em>around the fire.</em></h1>
+      <p class="sp">When the mountain night closes in, gather with fellow remote workers around the fire — these connections last years.</p>
+      <div class="sbtns"><a href="#contact" class="btn-g">Reserve Your Spot</a><a href="#about" class="btn-gh">Our Story</a></div>
+    </div>
+  </div>
+  <div class="harrs"><button class="harr" onclick="prevSlide()">←</button><button class="harr" onclick="nextSlide()">→</button></div>
+  <div class="hdots" id="heroDots"></div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee"><div class="mtrack">
+  <span>Fast WiFi & Power Backup</span><b>·</b><span>Private Rooms at 1800m</span><b>·</b>
+  <span>Morning Mountain Runs</span><b>·</b><span>Forest & Alpine Camping</span><b>·</b>
+  <span>Himalayan Bike Rides</span><b>·</b><span>Bonfire Community Evenings</span><b>·</b>
+  <span>Shared Kitchen & Local Meals</span><b>·</b><span>Sarainkhet · Almora · Uttarakhand</span><b>·</b>
+  <span>Fast WiFi & Power Backup</span><b>·</b><span>Private Rooms at 1800m</span><b>·</b>
+  <span>Morning Mountain Runs</span><b>·</b><span>Forest & Alpine Camping</span><b>·</b>
+  <span>Himalayan Bike Rides</span><b>·</b><span>Bonfire Community Evenings</span><b>·</b>
+  <span>Shared Kitchen & Local Meals</span><b>·</b><span>Sarainkhet · Almora · Uttarakhand</span><b>·</b>
+</div></div>
+
+<!-- ABOUT -->
+<section id="about" class="sec">
+  <div class="about-wrap reveal">
+    <div class="al">
+      <div class="ey">Our Story</div>
+      <h2 class="seh">Where deep work meets<br><em>wild mountains.</em></h2>
+      <p>Tucked in the oak forests of Sarainkhet at 1800 metres — a place for remote workers who know their best thinking happens when they're truly free.</p>
+      <p>Free from the city. Free from the commute. Here, the office view is the Himalayas and the afternoon break is a ride to a panorama that stops you in your tracks.</p>
+      <p>Minimum 7 nights. Stay longer — the mountains have a way of making you want to.</p>
+    </div>
+    <div class="astats">
+      <div class="ast"><div class="ast-bg">1800</div><div class="ast-v">1800<span style="font-size:1.3rem;color:var(--lichen)">m</span></div><div class="ast-l">Above Sea Level</div></div>
+      <div class="ast"><div class="ast-bg">7</div><div class="ast-v">7<span style="font-size:1.3rem;color:var(--lichen)">+</span></div><div class="ast-l">Night Minimum Stay</div></div>
+      <div class="ast"><div class="ast-bg">∞</div><div class="ast-v">∞</div><div class="ast-l">Himalayan Views</div></div>
+      <div class="ast"><div class="ast-bg">5</div><div class="ast-v">5</div><div class="ast-l">Weekend Adventures</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- AMENITIES -->
+<section id="amenities" class="sec am-bg">
+  <div class="am-in">
+    <div class="reveal"><div class="ey">Facilities</div><h2 class="seh">Everything you need.<br><em>Nothing you don't.</em></h2></div>
+    <div class="am-grid reveal d1">
+      <div class="amc"><div class="ami">📶</div><div class="amt">Fast WiFi & Power Backup</div><p class="amd">High-speed wired and wireless internet with reliable backup power. Video calls, big uploads — no frustration in the hills.</p></div>
+      <div class="amc"><div class="ami">🛏️</div><div class="amt">Private Rooms</div><p class="amd">Clean cosy private rooms with daily housekeeping, fresh linen, and hot water. Your space to fully recharge.</p></div>
+      <div class="amc"><div class="ami">🍳</div><div class="amt">Shared Kitchen</div><p class="amd">Fully equipped communal kitchen with local produce and Kumaoni staples. Cook when you want, share meals over chai.</p></div>
+      <div class="amc"><div class="ami">🔥</div><div class="amt">Bonfire Evenings</div><p class="amd">When the mountain night closes in, gather around the fire. These conversations lead to collaborations that last years.</p></div>
+      <div class="amc"><div class="ami">🥾</div><div class="amt">Morning Run & Walk</div><p class="amd">Guided and self-guided dawn trails through alpine forest. High-altitude running that resets your mind like nothing else.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCES -->
+<section id="exp">
+  <div class="expb reveal">
+    <div class="evis ev1">🌄</div>
+    <div class="eco"><div class="en">01</div><h3 class="et">High-Altitude<br><em>Morning Trails</em></h3><p class="eb">Lace up before sunrise and hit the trail at 5:30 AM. The air at 1800 metres clears your mind in ways no productivity hack can replicate. Return to your desk sharper than you've felt in years.</p><div class="pills"><span class="pill">Daily · 5:30 AM</span><span class="pill">Guided Option</span><span class="pill">All Fitness Levels</span><span class="pill">45–90 mins</span></div></div>
+  </div>
+  <div class="expb rv reveal">
+    <div class="evis ev2">💻</div>
+    <div class="eco"><div class="en">02</div><h3 class="et">Coworking with<br><em>a Mountain View</em></h3><p class="eb">A quiet workspace overlooking the forest canopy and, on clear days, the Himalayan snowline. Fast internet, power backup, and the focus that only comes when your mind knows it's exactly where it should be.</p><div class="pills"><span class="pill">Fast WiFi</span><span class="pill">Power Backup</span><span class="pill">Quiet Hours</span><span class="pill">Video-Call Ready</span></div></div>
+  </div>
+  <div class="expb reveal">
+    <div class="evis ev3">🏕️</div>
+    <div class="eco"><div class="en">03</div><h3 class="et">Forest &amp; Alpine<br><em>Weekend Camping</em></h3><p class="eb">Every weekend the mountains call. Trek to a forest clearing or alpine meadow. Sleep under a sky so dark and star-heavy it resets something deep inside you. Back at your desk Monday, recharged.</p><div class="pills"><span class="pill">Forest Camps</span><span class="pill">Alpine Meadows</span><span class="pill">Campfire Cooking</span><span class="pill">Every Weekend</span></div></div>
+  </div>
+  <div class="expb rv reveal">
+    <div class="evis ev4">🚵</div>
+    <div class="eco"><div class="en">04</div><h3 class="et">Himalayan<br><em>Bike Rides</em></h3><p class="eb">Quiet mountain roads through pine and deodar, climbing until the full sweep of the Himalayan range opens before you — Nanda Devi, Trishul, Panchachuli. 2–3 hours. Unforgettable forever.</p><div class="pills"><span class="pill">2–3 Hour Rides</span><span class="pill">Himalayan Views</span><span class="pill">Mountain Roads</span><span class="pill">All Skill Levels</span></div></div>
+  </div>
+</section>
+
+<!-- WEEKEND -->
+<section id="weekend" class="sec wk-bg">
+  <div class="wki">
+    <div class="reveal"><div class="ey">The Weekend Rhythm</div><h2 class="seh">Work hard.<br><em>Adventure harder.</em></h2></div>
+    <div class="wk-grid reveal d1">
+      <div class="wkc"><span class="wkt">Friday Evening</span><span class="wki2">🔥</span><div class="wkn">Bonfire Night</div><p class="wkd">The week ends around the fire. Community gathering, chai, stories — evenings where the best ideas happen by accident.</p><div class="wktags"><span class="wtag">Community</span><span class="wtag">Open Fire</span><span class="wtag">Shared Kitchen</span></div></div>
+      <div class="wkc"><span class="wkt">Saturday Morning</span><span class="wki2">🥾</span><div class="wkn">Trek to Camp</div><p class="wkd">Trail into forest or up to alpine meadows. Guided or self-guided, through landscapes that feel genuinely remote and wild.</p><div class="wktags"><span class="wtag">Forest Trek</span><span class="wtag">Alpine Route</span><span class="wtag">2–4 hrs</span></div></div>
+      <div class="wkc" style="background:rgba(201,168,76,.07)"><span class="wkt">Saturday Night</span><span class="wki2">⭐</span><div class="wkn">Camp Under Stars</div><p class="wkd">The Milky Way is not an abstraction here — it's directly overhead, dense and bright, filling the whole sky.</p><div class="wktags"><span class="wtag">Stargazing</span><span class="wtag">Campfire</span><span class="wtag">Deep Forest</span></div></div>
+      <div class="wkc"><span class="wkt">Sunday</span><span class="wki2">🚵</span><div class="wkn">Bike Ride &amp; Rest</div><p class="wkd">Morning ride to a panoramic viewpoint. Slow lunch, optional yoga on the terrace. Monday-ready by sunset.</p><div class="wktags"><span class="wtag">Bike Ride</span><span class="wtag">Views</span><span class="wtag">Rest &amp; Reset</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="sec">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="reveal"><div class="ey">Stay Packages</div><h2 class="seh">Simple, all-inclusive<br><em>pricing.</em></h2></div>
+    <div class="pc-grid reveal d1">
+      <div class="pc">
+        <div class="pct">Short Escape</div><div class="pcti">One Week Stay</div>
+        <div class="pcp">₹699<sub>/night</sub></div><div class="pcm">7-night minimum</div>
+        <div class="pcd"></div>
+        <ul class="pcl"><li>Private room & housekeeping</li><li>Fast WiFi + power backup</li><li>Shared kitchen access</li><li>Morning trail runs</li><li>1 weekend camping trip</li><li>Bonfire evenings</li><li>Himalayan bike ride</li></ul>
+        <a href="#contact" class="pcb">Enquire →</a>
+      </div>
+      <div class="pc feat">
+        <div class="pct">Best Value</div><div class="pcti">Month-Long Stay</div>
+        <div class="pcp">₹549<sub>/night</sub></div><div class="pcm">28–31 nights · Save ~21%</div>
+        <div class="pcd"></div>
+        <ul class="pcl"><li>Everything in One Week</li><li>All weekend adventures</li><li>Full kitchen access</li><li>Community events & meetups</li><li>Flexible check-in/out</li><li>Priority room selection</li><li>Monthly rate lock</li></ul>
+        <a href="#contact" class="pcb">Enquire →</a>
+      </div>
+      <div class="pc">
+        <div class="pct">Extended Retreat</div><div class="pcti">3+ Month Stay</div>
+        <div class="pcp">₹449<sub>/night</sub></div><div class="pcm">90+ nights · Best rate</div>
+        <div class="pcd"></div>
+        <ul class="pcl"><li>Everything in Month-Long</li><li>Dedicated workspace</li><li>Guest privileges</li><li>Custom adventure schedule</li><li>Seasonal experiences</li><li>Direct host contact</li><li>First refusal on return</li></ul>
+        <a href="#contact" class="pcb">Enquire →</a>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:1.2rem;font-size:.72rem;color:#8a9a82">All prices include room, shared facilities, and weekend experiences. Meals available at cost.</p>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="sec rv-bg">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="reveal"><div class="ey">Guest Stories</div><h2 class="seh">From people who<br><em>stayed and loved it.</em></h2></div>
+    <div class="rv-grid reveal d1">
+      <div class="rvc"><div class="rvs">★★★★★</div><p class="rvt">I came for two weeks and left after six. The WiFi is solid, the morning runs destroyed my gym habit in the best way, and I launched a project I'd been delaying for two years.</p><div class="rva">Rahul M.</div><div class="rvr">Product Designer · Bangalore</div></div>
+      <div class="rvc"><div class="rvs">★★★★★</div><p class="rvt">Weekend camping under Himalayan stars is alone worth the trip. Deep work days + bonfire evenings + trail mornings makes this genuinely transformative, not just a pretty escape.</p><div class="rva">Sarah K.</div><div class="rvr">Freelance Developer · Berlin</div></div>
+      <div class="rvc"><div class="rvs">★★★★★</div><p class="rvt">The shared kitchen became the real coworking space. Three of us cooked together every evening, and two are now business partners. Mountains make people open and creative.</p><div class="rva">Priya &amp; Aditya</div><div class="rvr">Remote Team · Mumbai &amp; Pune</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="gal-bg">
+  <div class="gal-in">
+    <div class="reveal">
+      <div class="ey">Photo Gallery</div>
+      <h2 class="seh">Life at <em>Mountain Coworking Stay</em></h2>
+      <p class="gsub">Click any photo for full-screen · Replace gallery1.jpg – gallery12.jpg with your own photos</p>
+    </div>
+    <div class="gf-row reveal d1">
+      <button class="gfb on" onclick="gFilter('all',this)">All Photos</button>
+      <button class="gfb" onclick="gFilter('views',this)">Mountain Views</button>
+      <button class="gfb" onclick="gFilter('stay',this)">The Stay</button>
+      <button class="gfb" onclick="gFilter('adventure',this)">Adventures</button>
+      <button class="gfb" onclick="gFilter('community',this)">Community</button>
+    </div>
+    <div class="masonry reveal d2" id="masonry">
+      <div class="gt" data-cat="views" data-title="Himalayan Panorama" onclick="openLB(0)"><div class="gt-ph" style="height:275px;background:linear-gradient(135deg,#1a3a20,#2d5a35)">🏔️</div><img src="gallery1.jpg" alt="" onerror="this.remove()"><div class="gt-ov"></div><div class="gt-inf"><span class="gt-ti">Himalayan Panorama</span><span class="gt-ca">Mountain Views</span></div><div class="gt-z">⊕</div></div>
+      <div class="gt" data-cat="adventure" data-title="Dawn Trail Run" onclick="openLB(1)"><div class="gt-ph" style="height:195px;background:linear-gradient(135deg,#0f2535,#1e3d50)">🌄</div><img src="gallery2.jpg" alt="" onerror="this.remove()"><div class="gt-ov"></div><div class="gt-inf"><span class="gt-ti">Dawn Trail Run</span><span class="gt-ca">Adventures</span></div><div class="gt-z">⊕</div></div>
+      <div class="gt" data-cat="stay" data-title="Coworking Workspace" onclick="openLB(2)"><div class="gt-ph" style="height:215px;background:linear-gradient(135deg,#1a2a18,#283d25)">💻</div><img src="gallery3.jpg" alt="" onerror="this.remove()"><div class="gt-ov"></div><div class="gt-inf"><span class="gt-ti">Coworking Workspace</span><span class="gt-ca">The Stay</span></div><div class="gt-z">⊕</div></div>
+      <div class="gt" data-cat="community" data-title="Bonfire Evening" onclick="openLB(3)"><div class="gt-ph" style="height:255px;background:linear-gradient(135deg,#2a1a0f,#3d2820)">🔥</div><img src="gallery4.jpg" alt="" onerror="this.remove()"><div class="gt-ov"></div><div class="gt-inf"><span class="gt-ti">Bonfire Evening</span><span class="gt-ca">Community</span></div><div class="gt-z">⊕</div></div>
+      <div class="gt" data-cat="adventure" data-title="Alpine Meadow Camp" onclick="openLB(4)"><div class="gt-ph" style="height:295px;background:linear-gradient(135deg,#1a1535,#252048)">⛺</div><img src="gallery5.jpg" alt="" onerror="this.remove()"><div class="gt-ov"></div><div class="gt-inf"><span class="gt-ti">Alpine Meadow Camp</span><span class="gt-ca">Adventures</span></div><div class="gt-z">⊕</div></div>
+      <div class="gt" data-cat="stay" data-title="Private Room" onclick="openLB(5)"><div class="gt-ph" style="height:205px;background:linear-gradient(135deg,#2a2015,#3d3020)">🛏️</div><img src="gallery6.jpg" alt="" onerror="this.remove()"><div class="gt-ov"></div><div class="gt-inf"><span class="gt-ti">Private Room</span><span class="gt-ca">The Stay</span></div><div class="gt-z">⊕</div></div>
+      <div class="gt" data-cat="adventure" data-title="Himalayan Bike Ride" onclick="openLB(6)"><div class="gt-ph" style="height:235px;background:linear-gradient(135deg,#1a3020,#253a2a)">🚵</div><img src="gallery7.jpg" alt="" onerror="this.remove()"><div class="gt-ov"></div><div class="gt-inf"><span class="gt-ti">Himalayan Bike Ride</span><span class="gt-ca">Adventures</span></div><div class="gt-z">⊕</div></div>
+      <div class="gt" data-cat="stay" data-title="Shared Kitchen" onclick="openLB(7)"><div class="gt-ph" style="height:190px;background:linear-gradient(135deg,#352515,#4a3520)">🍳</div><img src="gallery8.jpg" alt="" onerror="this.remove()"><div class="gt-ov"></div><div class="gt-inf"><span class="gt-ti">Shared Kitchen</span><span class="gt-ca">The Stay</span></div><div class="gt-z">⊕</div></div>
+      <div class="gt" data-cat="views" data-title="Nanda Devi at Sunrise" onclick="openLB(8)"><div class="gt-ph" style="height:265px;background:linear-gradient(135deg,#0d1f2d,#1a3040)">❄️</div><img src="gallery9.jpg" alt="" onerror="this.remove()"><div class="gt-ov"></div><div class="gt-inf"><span class="gt-ti">Nanda Devi at Sunrise</span><span class="gt-ca">Mountain Views</span></div><div class="gt-z">⊕</div></div>
+      <div class="gt" data-cat="community" data-title="Community Dinner" onclick="openLB(9)"><div class="gt-ph" style="height:220px;background:linear-gradient(135deg,#1e2a18,#2d3d22)">🥘</div><img src="gallery10.jpg" alt="" onerror="this.remove()"><div class="gt-ov"></div><div class="gt-inf"><span class="gt-ti">Community Dinner</span><span class="gt-ca">Community</span></div><div class="gt-z">⊕</div></div>
+      <div class="gt" data-cat="adventure" data-title="Oak Forest Walk" onclick="openLB(10)"><div class="gt-ph" style="height:245px;background:linear-gradient(135deg,#152515,#223322)">🌿</div><img src="gallery11.jpg" alt="" onerror="this.remove()"><div class="gt-ov"></div><div class="gt-inf"><span class="gt-ti">Oak Forest Walk</span><span class="gt-ca">Adventures</span></div><div class="gt-z">⊕</div></div>
+      <div class="gt" data-cat="views" data-title="Starry Himalayan Night" onclick="openLB(11)"><div class="gt-ph" style="height:195px;background:linear-gradient(135deg,#080520,#12103a)">🌌</div><img src="gallery12.jpg" alt="" onerror="this.remove()"><div class="gt-ov"></div><div class="gt-inf"><span class="gt-ti">Starry Himalayan Night</span><span class="gt-ca">Mountain Views</span></div><div class="gt-z">⊕</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lb" id="lb" onclick="lbBg(event)">
+  <button class="lb-x" onclick="closeLB()">✕</button>
+  <button class="lb-ar lb-pv" onclick="lbNav(-1)">←</button>
+  <button class="lb-ar lb-nx" onclick="lbNav(1)">→</button>
+  <div class="lb-wrap" id="lbWrap"><div class="lb-ph" id="lbPh"></div><img id="lbImg" src="" alt="" style="display:none"></div>
+  <div class="lb-cp"><div class="lb-cti" id="lbTi"></div><div class="lb-cco" id="lbCo"></div></div>
+  <div class="lb-str" id="lbStr"></div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact" class="sec">
+  <div style="max-width:1000px;margin:0 auto">
+    <div class="reveal"><div class="ey">Get In Touch</div><h2 class="seh">Ready for the<br><em>mountains?</em></h2></div>
+    <div class="ct-grid reveal d1">
+      <div class="ctl">
+        <p>Tell us your dates, your work setup, and what you're hoping for. We reply within 24 hours — no automated portals, just a real conversation.</p>
+        <p>We prioritise guests planning to stay at least a week. If that's you, we'd love to hear from you.</p>
+        <div class="ctd">
+          <div class="cd"><div class="cdi">📍</div><div><div class="cdl">Location</div><div class="cdv">Sarainkhet, Almora District, Uttarakhand — 263601</div></div></div>
+          <div class="cd"><div class="cdi">🌐</div><div><div class="cdl">Website</div><div class="cdv"><a href="#">mountaincoworkingstay.com</a></div></div></div>
+          <div class="cd"><div class="cdi">📧</div><div><div class="cdl">Email</div><div class="cdv"><a href="mailto:negiveer227@gmail.com">negiveer227@gmail.com</a></div></div></div>
+          <div class="cd"><div class="cdi">📱</div><div><div class="cdl">WhatsApp / Phone</div><div class="cdv"><a href="https://wa.me/918130979874" target="_blank">+91 81309 79874</a></div></div></div>
+          <div class="cd"><div class="cdi">📸</div><div><div class="cdl">Instagram</div><div class="cdv"><a href="#">@mountaincoworkingstay</a></div></div></div>
+        </div>
+      </div>
+      <div class="cf">
+        <div class="cf-row">
+          <div class="cff"><label>Your Name</label><input type="text" id="cfN" placeholder="Priya Sharma"></div>
+          <div class="cff"><label>Email Address</label><input type="email" id="cfE" placeholder="you@work.com"></div>
+        </div>
+        <div class="cf-row">
+          <div class="cff"><label>Arrival Date</label><input type="date" id="cfD"></div>
+          <div class="cff"><label>How Long?</label><select id="cfDr"><option value="">Select duration...</option><option>1–2 weeks</option><option>3–4 weeks</option><option>1–2 months</option><option>3+ months</option></select></div>
+        </div>
+        <div class="cff"><label>Group Size</label><select id="cfP"><option>Just me</option><option>2 people</option><option>3–4 people (small team)</option><option>5+ people (group retreat)</option></select></div>
+        <div class="cff"><label>About You &amp; What You're Looking For</label><textarea id="cfM" rows="4" placeholder="What do you do, remote setup, any questions..."></textarea></div>
+        <div class="cf-btns">
+          <button class="btn-email" onclick="doEmail()">📧 Send via Email →</button>
+          <button class="btn-wa" onclick="doWA()"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.12 1.527 5.853L.057 23.571a.5.5 0 00.372.599l5.848-1.531A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.808 9.808 0 01-5.003-1.373l-.357-.213-3.71.972.988-3.61-.233-.371A9.818 9.818 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>WhatsApp</button>
+        </div>
+        <p class="cf-note">📧 → <strong>negiveer227@gmail.com</strong> &nbsp;|&nbsp; 💬 → <strong>+91 81309 79874</strong></p>
+        <div class="cf-ok" id="cfOk">✅ Your email app should open now with the enquiry pre-filled. If not, email negiveer227@gmail.com directly.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHATSAPP FLOAT -->
+<div class="wa-float">
+  <div class="wa-pop" id="waPop">
+    <div class="wa-hd">
+      <div class="wa-av">🏔️</div>
+      <div><div class="wa-hn">Mountain Coworking Stay</div><div class="wa-hs">● Usually replies within an hour</div></div>
+      <button class="wa-cl" onclick="toggleWA()">✕</button>
+    </div>
+    <div class="wa-bd">
+      <div class="wa-bub">👋 Hi! Thinking about working from the Himalayas?<br><br>Drop a message — tell us your dates and we'll reply fast!<div class="wa-bt">Today</div></div>
+    </div>
+    <div class="wa-ft">
+      <div class="wa-qi">
+        <input type="text" id="waMsg" placeholder="Type a message..." onkeydown="if(event.key==='Enter')waQuick()">
+        <button onclick="waQuick()">➤</button>
+      </div>
+      <a class="wa-ol" href="https://wa.me/918130979874?text=Hi%21%20I%20found%20mountaincoworkingstay.com%20and%20I%27m%20interested%20in%20a%20stay.%20Can%20you%20tell%20me%20about%20availability%3F" target="_blank" style="margin-top:.45rem">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.12 1.527 5.853L.057 23.571a.5.5 0 00.372.599l5.848-1.531A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.808 9.808 0 01-5.003-1.373l-.357-.213-3.71.972.988-3.61-.233-.371A9.818 9.818 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+        Open in WhatsApp
+      </a>
+    </div>
+  </div>
+  <div class="wa-wrap">
+    <span class="wa-tip">Chat with us</span>
+    <button class="wa-btn" onclick="toggleWA()">
+      <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.12 1.527 5.853L.057 23.571a.5.5 0 00.372.599l5.848-1.531A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.808 9.808 0 01-5.003-1.373l-.357-.213-3.71.972.988-3.61-.233-.371A9.818 9.818 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+    </button>
+  </div>
+</div>
+
+<footer>
+  <div><div class="fl">mountaincoworkingstay<span>.com</span></div><div class="flo">Sarainkhet · Almora · Uttarakhand · India</div></div>
+  <ul class="flnk"><li><a href="#about">About</a></li><li><a href="#amenities">Amenities</a></li><li><a href="#exp">Experiences</a></li><li><a href="#weekend">Weekends</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#contact">Contact</a></li></ul>
+  <p class="fco">© 2025 mountaincoworkingstay.com · Built at 1800m</p>
+</footer>
+
+<script>
+// NAV
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>80));
+
+// SLIDER
+let cur=0,tot=5;
+const sl=document.getElementById('heroSlides'),dt=document.getElementById('heroDots');
+for(let i=0;i<tot;i++){const d=document.createElement('button');d.className='hdot'+(i===0?' on':'');d.onclick=()=>goTo(i);dt.appendChild(d)}
+function goTo(n){cur=(n+tot)%tot;sl.style.transform=`translateX(-${cur*100}%)`;document.querySelectorAll('.hdot').forEach((d,i)=>d.classList.toggle('on',i===cur))}
+function nextSlide(){goTo(cur+1)}function prevSlide(){goTo(cur-1)}
+let at=setInterval(nextSlide,5500);
+sl.addEventListener('mouseenter',()=>clearInterval(at));
+sl.addEventListener('mouseleave',()=>{at=setInterval(nextSlide,5500)});
+
+// GALLERY FILTER
+function gFilter(cat,btn){
+  document.querySelectorAll('.gfb').forEach(b=>b.classList.remove('on'));btn.classList.add('on');
+  document.querySelectorAll('.gt').forEach(el=>{const s=cat==='all'||el.dataset.cat===cat;el.style.opacity=s?'1':'0.12';el.style.pointerEvents=s?'auto':'none'});
+}
+
+// LIGHTBOX
+const gd=[...document.querySelectorAll('.gt')].map(el=>({title:el.dataset.title,emoji:el.querySelector('.gt-ph').textContent.trim(),src:el.querySelector('img')?el.querySelector('img').src:''}));
+let li=0;
+function openLB(i){li=i;rlb();bstr();document.getElementById('lb').classList.add('open');document.body.style.overflow='hidden'}
+function closeLB(){document.getElementById('lb').classList.remove('open');document.body.style.overflow=''}
+function lbBg(e){if(e.target===document.getElementById('lb'))closeLB()}
+function lbNav(d){li=(li+d+gd.length)%gd.length;rlb();ustr()}
+function rlb(){const d=gd[li],img=document.getElementById('lbImg'),ph=document.getElementById('lbPh');document.getElementById('lbTi').textContent=d.title;document.getElementById('lbCo').textContent=`${li+1} / ${gd.length}`;img.style.display='none';ph.style.display='flex';ph.textContent=d.emoji;if(d.src){const t=new Image();t.onload=()=>{img.src=d.src;img.style.display='block';ph.style.display='none'};t.src=d.src}}
+function bstr(){const s=document.getElementById('lbStr');s.innerHTML='';gd.forEach((d,i)=>{const el=document.createElement('div');el.className='lb-th'+(i===li?' on':'');el.onclick=()=>{li=i;rlb();ustr()};if(d.src){const im=document.createElement('img');im.src=d.src;im.onerror=()=>{el.textContent=d.emoji};el.appendChild(im)}else el.textContent=d.emoji;s.appendChild(el)})}
+function ustr(){document.querySelectorAll('.lb-th').forEach((t,i)=>t.classList.toggle('on',i===li))}
+document.addEventListener('keydown',e=>{if(!document.getElementById('lb').classList.contains('open'))return;if(e.key==='ArrowRight')lbNav(1);if(e.key==='ArrowLeft')lbNav(-1);if(e.key==='Escape')closeLB()});
+
+// WHATSAPP
+let wo=false;
+function toggleWA(){wo=!wo;document.getElementById('waPop').classList.toggle('open',wo)}
+setTimeout(()=>{if(!sessionStorage.getItem('ws')){toggleWA();sessionStorage.setItem('ws','1')}},4000);
+function waQuick(){const m=document.getElementById('waMsg').value.trim();if(m)window.open(`https://wa.me/918130979874?text=${encodeURIComponent(m)}`,'_blank')}
+
+// CONTACT
+function doEmail(){
+  const n=document.getElementById('cfN').value.trim(),e=document.getElementById('cfE').value.trim();
+  if(!n||!e){alert('Please enter your name and email.');return}
+  const sub=encodeURIComponent(`Stay Enquiry from ${n} — Mountain Coworking Stay`);
+  const body=encodeURIComponent(`New Enquiry from mountaincoworkingstay.com\n━━━━━━━━━━━━━━━━\nName: ${n}\nEmail: ${e}\nArrival: ${document.getElementById('cfD').value||'Not specified'}\nDuration: ${document.getElementById('cfDr').value||'Not specified'}\nGroup: ${document.getElementById('cfP').value}\n━━━━━━━━━━━━━━━━\nMessage:\n${document.getElementById('cfM').value||'(none)'}`);
+  window.location.href=`mailto:negiveer227@gmail.com?subject=${sub}&body=${body}`;
+  document.getElementById('cfOk').style.display='block';
+}
+function doWA(){
+  const n=document.getElementById('cfN').value.trim();
+  const t=`Hi! I found mountaincoworkingstay.com 🏔️\n\nName: ${n||'Not given'}\nArrival: ${document.getElementById('cfD').value||'TBD'}\nDuration: ${document.getElementById('cfDr').value||'TBD'}\nGroup: ${document.getElementById('cfP').value}\n\n${document.getElementById('cfM').value||"I'd love to know about availability!"}`;
+  window.open(`https://wa.me/918130979874?text=${encodeURIComponent(t)}`,'_blank');
+}
+
+// REVEAL
+const ro=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on')}),{threshold:.07});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+</script>
+</body>
+</html>
